@@ -1,0 +1,25 @@
+[benchmark]
+id = "toy-state-chain"
+version = "0.1"
+verifier_isolation = "in_process_contract"
+metric = "task_success"
+
+[[tasks]]
+task_id = "toy-train-001"
+split = "train"
+group_id = "toy-group-001"
+step_budget = 5
+instruction = "Complete 3 ordered operations, advancing exactly one index at a time from 0 to 2."
+dependency_depth = 3
+annotation_source = "manual_toy"
+private_data = { operation_count = 3 }
+
+[[tasks]]
+task_id = "toy-test-001"
+split = "test"
+group_id = "toy-group-002"
+step_budget = 6
+instruction = "Complete 4 ordered operations, advancing exactly one index at a time from 0 to 3."
+dependency_depth = 4
+annotation_source = "manual_toy"
+private_data = { operation_count = 4 }
