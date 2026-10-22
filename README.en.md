@@ -35,3 +35,5 @@ The scaffold separates student-visible tasks from controller-side task records, 
 See [the resource and environment inventory](docs/资源与环境盘点.md), the [benchmark pilot protocol](docs/benchmark_pilot_protocol.md), the current [research question](docs/research_question.md), and the broader [research plan](docs/研究工作规划.md).
 
 See [the Git workflow](docs/git_workflow.md) for the repository, branch, and commit conventions.
+
+See [the server experiment and configuration plan](docs/服务器实验设计与配置.md) for the A100 queue-aware P0/P1 procedure. Server paths, scheduler settings, and model identifiers remain explicit TODOs until the lab confirms them.

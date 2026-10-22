@@ -35,3 +35,5 @@ sources/                 参考仓库和论文的本地副本，不进入 Git
 算力环境初盘和待确认事项见[资源与环境盘点](docs/资源与环境盘点.md)；benchmark pilot 协议见[benchmark_pilot_protocol.md](docs/benchmark_pilot_protocol.md)；当前问题定义见[research_question.md](docs/research_question.md)。广义阶段路线见[研究工作规划](docs/研究工作规划.md)。
 
 Git 仓库、分支和提交约定见 [Git workflow](docs/git_workflow.md)。
+
+服务器准备和 A100 排队下的 P0/P1 执行方案见[服务器实验设计与配置](docs/服务器实验设计与配置.md)；服务器路径、调度器和模型字段均保留为待确认配置。
