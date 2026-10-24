@@ -2,6 +2,8 @@
 
 日期：2026-10-24（Asia/Shanghai）
 
+勘误（2026-10-24）：上一版 SIA 的题名及 arXiv 编号错配，旧引用已撤回，R4 已改为真正的 SIA（2605.27276）。R3 的准确题名亦已校正。先前的“核对摘要”不能当作完成相关工作全文核验；本次补查见 ../docs/analysis/Harness与Model协同演化_文献比较与研究判断_2026-10-24.md。
+
 性质：基于现有文件、代码审查和定向文献核对的建议稿；研究方向、机制与资源选择由研究者决定。本文件细化 docs/研究工作规划.md 的 P0/P1，不替代原规划。没有运行真实 benchmark、访问实验室服务器或训练模型。
 
 ## 1. 一句话判断
@@ -38,7 +40,7 @@ B1 比 B0 好，只能支持教师/K 在当前任务上有帮助。教师可能�
 
 Harness-Zero 已研究执行前 PASS/REPLACE、接受轨迹训练与部署移除参考 Harness，并在讨论中提出递归改进方向。[R1] HyperAgents 主实验演化任务代理与元代理程序，冻结基础模型权重。[R2]
 
-本轮还核对了 Co-Harness 的模型与 Harness 联合演化，以及 SIA 的多轮教师—学生蒸馏和 Harness 演化摘要。[R3–R4] 因此仅靠“两个仓库组合”“加入迭代”“应用于长任务”无法确认研究增量。
+补查显示，Co-Harness 实际交替演化 Harness 与模型权重；SIA 根据反馈选择修改 Harness 或更新权重，其 Feedback-Agent 仍冻结。[R3–R4] 不能把 SIA 概括成已验证的多轮教师—学生自我蒸馏。仅靠“两个仓库组合”“加入迭代”“应用于长任务”无法确认研究增量；具体证据与边界见比较文档。
 
 这是定向风险检查，不是完整查新。候选切口包括：特定长程失败为何可内化、有限审查预算下哪些位置的数据更有学习价值、更新 K 何时优于固定 K。这些候选都需要围绕具体机制补查近邻和实验。
 
@@ -126,7 +128,7 @@ experiment-plan 安装包所引用的 shared-references/output-*.md 本机未找
 
 - [R1] Harness-Zero: Harness Distillation. https://arxiv.org/abs/2609.24974 。本轮核对 v1 正文的方法、AppWorld 实验与递归讨论。AppWorld 已出现在原论文，选择该环境本身不能当作新增贡献。
 - [R2] Hyperagents. https://arxiv.org/abs/2603.19461 。本轮核对 v1 正文：主实验演化 agent/meta-agent 程序，基础模型权重冻结。
-- [R3] Co-Harness: Co-Evolving Model Weights and Agent Harnesses. https://arxiv.org/abs/2607.22688 。本轮核对官方摘要；确认模型与 Harness 联合改进近邻，尚未完成方法级逐项比较。
-- [R4] Self-Improving Agents: Joint Evolution of Harness and Model. https://arxiv.org/abs/2609.04912 。本轮核对官方摘要；确认多轮蒸馏与 Harness 演化近邻，尚未完成方法级逐项比较。
+- [R3] Chen et al., Co-Harness: Co-Evolving Harnesses and Model Weights for LLM Agents. https://arxiv.org/abs/2607.22688 。题名已校正；本次补查 v1 全文及 Table 6，详见后续比较文档。
+- [R4] Hebbar et al., SIA: Self Improving AI with Harness & Weight Updates. https://arxiv.org/abs/2605.27276 。本次补查 v2 全文、Table 3 和 §9。旧题名与编号 2609.04912 不匹配，已撤回；不能沿用旧引用判断研究重合。
 
 本轮定向检索不足以证明候选机制新颖，也不能证明已有工作已经覆盖本项目的全部设想。具体差异须以论文方法、数据可见性、固定 h0、控制变量和同预算对照逐项核验。
