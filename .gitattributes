@@ -3,3 +3,5 @@
 *.py text eol=lf
 *.toml text eol=lf
 *.csv text eol=lf
+*.sh text eol=lf
+*.env.example text eol=lf

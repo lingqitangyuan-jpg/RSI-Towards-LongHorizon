@@ -5,6 +5,7 @@ venv/
 .env
 .env.*
 !.env.example
+configs/server/*.env
 runs/*
 !runs/README.md
 checkpoints/
