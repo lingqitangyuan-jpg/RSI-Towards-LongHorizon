@@ -5,3 +5,4 @@
 | 2026-10-24 | 现状判断与实验计划 | EXPERIMENT_PLAN.md | EXPERIMENT_PLAN_20261024.md | 本地代码/文档证据与定向文献核对；建议稿，未运行真实实验 |
 | 2026-10-24 | 近期任务跟踪 | EXPERIMENT_TRACKER.md | EXPERIMENT_TRACKER_20261024.md | 待执行任务表；无实验结果 |
 | 2026-10-24 | Harness–Model 文献比较与研究判断 | ../docs/analysis/Harness与Model协同演化_文献比较与研究判断_2026-10-24.md | 同文件 | 四篇直接近邻、三篇校准材料；动机与探索实验建议；更正 SIA 错配引用，无真实实验 |
+| 2026-10-24 | Agent 长程推理与 RSI 文献库 | ../docs/literature/README.md | clusters/*.md | 按五个研究簇收录 Note.md 论文；每篇含动机、方法、实验、谱系与局限 |
