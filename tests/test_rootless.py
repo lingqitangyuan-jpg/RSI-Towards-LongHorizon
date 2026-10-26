@@ -1,3 +1,7 @@
+import contextlib
+import importlib.util
+import io
+import os
 from pathlib import Path
 import sys
 import tempfile
@@ -13,6 +17,36 @@ from rsi_horizon.contracts import BenchmarkTask, TaskSpec
 
 
 class RootlessTests(unittest.TestCase):
+    def load_worker(self):
+        spec = importlib.util.spec_from_file_location("sandbox_worker_test", Path(__file__).resolve().parents[1] / "src/rsi_horizon/execution/worker.py")
+        worker = importlib.util.module_from_spec(spec)
+        with patch.dict(os.environ, {"MAX_FRAME_BYTES": "1048576", "MAX_OUTPUT_CHARS": "12000"}):
+            spec.loader.exec_module(worker)
+        return worker
+
+    def test_proxy_route_names_do_not_capture_endpoint_keyword_arguments(self):
+        worker = self.load_worker()
+        worker.emit = Mock()
+        worker.receive = lambda: {"id": worker.CALL_ID, "result": {"public": True}}
+        app = worker.App("api_docs")
+        app.show_api_doc(app_name="supervisor", api_name="show_profile")
+        envelope = worker.emit.call_args.args[0]
+        self.assertEqual((envelope["app"], envelope["api"]), ("api_docs", "show_api_doc"))
+        self.assertEqual(envelope["kwargs"], {"app_name": "supervisor", "api_name": "show_profile"})
+        worker.Requester().request("api_docs", "show_api_doc", app_name="supervisor", api_name="show_profile")
+        self.assertEqual(worker.emit.call_args.args[0]["kwargs"], envelope["kwargs"])
+
+    def test_python_last_expression_is_visible_and_variables_persist(self):
+        worker = self.load_worker()
+        namespace = {}
+        output = io.StringIO()
+        with contextlib.redirect_stdout(output):
+            worker.execute_python("x = 40\nx + 2", namespace)
+            worker.execute_python("x += 1\nprint(x)", namespace)
+            worker.execute_python("None", namespace)
+        self.assertEqual(output.getvalue(), "42\n41\n")
+        self.assertEqual(namespace["x"], 41)
+
     def test_admin_and_undocumented_endpoints_never_reach_world(self):
         docs = {"supervisor": {"show_profile": {}}, "admin": {"execute": {}}}
         for app, api in [("admin", "execute"), ("supervisor", "__dict__"), ("supervisor", "evaluate")]:

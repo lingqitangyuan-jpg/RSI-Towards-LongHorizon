@@ -1,6 +1,7 @@
 """Inside-only Python client: public API proxies and persistent execution state."""
 from __future__ import annotations
 
+import ast
 import contextlib
 import ctypes
 import errno
@@ -67,7 +68,7 @@ class App(ModuleType):
 CALL_ID = 0
 
 
-def call(app_name, api_name, **kwargs):
+def call(app_name, api_name, /, **kwargs):
     global CALL_ID
     CALL_ID += 1
     emit({"kind": "call", "id": CALL_ID, "app": app_name, "api": api_name, "kwargs": kwargs})
@@ -80,7 +81,7 @@ def call(app_name, api_name, **kwargs):
 
 
 class Requester:
-    def request(self, app_name, api_name, **kwargs):
+    def request(self, app_name, api_name, /, **kwargs):
         return call(app_name, api_name, **kwargs)
 
 
@@ -104,6 +105,18 @@ class OutputBuffer:
         if self.count <= OUTPUT_LIMIT:
             return self.head + self.tail
         return self.head + "\n[output truncated]\n" + self.tail
+
+
+def execute_python(code, namespace):
+    tree = ast.parse(code, filename="<agent-action>", mode="exec")
+    if tree.body and isinstance(tree.body[-1], ast.Expr):
+        final = tree.body.pop()
+        exec(compile(tree, "<agent-action>", "exec"), namespace)
+        value = eval(compile(ast.Expression(final.value), "<agent-action>", "eval"), namespace)
+        if value is not None:
+            print(repr(value))
+    else:
+        exec(compile(tree, "<agent-action>", "exec"), namespace)
 
 
 def main():
@@ -149,7 +162,7 @@ def main():
         error_type = None
         try:
             with contextlib.redirect_stdout(output), contextlib.redirect_stderr(output):
-                exec(compile(message["code"], "<agent-action>", "exec"), namespace)
+                execute_python(message["code"], namespace)
         except BaseException as exc:
             error_type = type(exc).__name__
             output.write(type(exc).__name__ + ": " + str(exc)[:500])

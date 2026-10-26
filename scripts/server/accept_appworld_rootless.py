@@ -166,6 +166,7 @@ def run_checks(config: dict, run: Path, run_id: str) -> dict:
     task_datetime = Task.load(task_id=task.public.task_id, load_ground_truth=False).datetime.isoformat()
     isolated = isolation_checks(config, run, task_datetime)
     cases = {}
+    proxy_checks = {}
     source = asset_root / "data/tasks" / task.public.task_id / "ground_truth/compiled_solution.py"
     for name in ("no_op_before", "official_solution", "reset_no_op", "reward_spoof"):
         env = RootlessAppWorldEnvironment(config, run_directory=run / name,
@@ -181,6 +182,16 @@ def run_checks(config: dict, run: Path, run_id: str) -> dict:
                 if result.info["execution_error_type"]:
                     raise IsolationError("Official solution did not execute in the isolated client: "
                                          + str(result.info["execution_error_type"]))
+            if name == "no_op_before":
+                docs_code = "endpoints = apis.api_docs.show_api_descriptions(app_name='supervisor')\ndoc = apis.api_docs.show_api_doc(app_name='supervisor',api_name='show_profile')\nsame = requester.request('api_docs','show_api_doc',app_name='supervisor',api_name='show_profile')\nassert endpoints and doc and doc == same\n42"
+                docs_result = env.step(Action("execute", {"code": docs_code}))
+                proxy_checks = {
+                    "public_api_keyword_arguments_forwarded": docs_result.info["execution_error_type"] is None,
+                    "requester_keyword_arguments_forwarded": docs_result.info["execution_error_type"] is None,
+                    "last_expression_displayed": docs_result.observation.last_result.strip() == "42",
+                }
+                if not all(proxy_checks.values()):
+                    raise IsolationError("Public proxy compatibility probe failed")
             attacks = {}
             if name == "reward_spoof":
                 attacks_code = '''
@@ -255,6 +266,7 @@ print(json.dumps(results,sort_keys=True))
                   and runner_bridge["official_verifier"].get("snapshot_unchanged", False),
               "core_runner_bridge_passes": runner_bridge["success"] and runner_bridge["steps"] == 2,
               "source_data_unchanged": unchanged}
+    checks.update(proxy_checks)
     return {"schema_version": "appworld-rootless-acceptance/v1",
             "status": "pass" if all(checks.values()) else "fail", "backend": "bubblewrap-pipe",
             "run_id": run_id, "task_id": task.public.task_id, "official_split": task.split,

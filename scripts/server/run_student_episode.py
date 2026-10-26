@@ -70,7 +70,7 @@ def main() -> int:
                 "model_id": config["model_id"], "revision": config["revision"], "reviewer_enabled": False,
                 "official_solution_loaded": False, "training_performed": False, "test_split_accessed": False,
                 "source_sha256": {}}
-    for name in ["src/rsi_horizon/runner.py", "src/rsi_horizon/model_policy.py", "src/rsi_horizon/integrations/appworld_rootless.py", "scripts/server/model_worker.py", "scripts/server/run_student_episode.py"]:
+    for name in ["src/rsi_horizon/runner.py", "src/rsi_horizon/model_policy.py", "src/rsi_horizon/integrations/appworld_rootless.py", "scripts/server/model_worker.py", "scripts/server/run_student_episode.py", "scripts/server/prepare_student.py", "scripts/server/rootless_verifier.py", "src/rsi_horizon/execution/bubblewrap.py", "src/rsi_horizon/execution/worker.py"]:
         manifest["source_sha256"][name] = hashlib.sha256((PROJECT / name).read_bytes()).hexdigest()
     (root / "config_resolved.toml").write_text(args.environment_config.read_text(encoding="utf-8"), encoding="utf-8")
     write_json(root / "student_resolved.json", config)
