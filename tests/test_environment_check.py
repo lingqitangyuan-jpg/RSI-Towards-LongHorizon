@@ -15,7 +15,7 @@ spec.loader.exec_module(checker)
 
 class EnvironmentCheckTests(unittest.TestCase):
     def test_docker_cli_does_not_hide_daemon_permission_error(self):
-        result = subprocess.CompletedProcess([], 1, stdout="client metadata", stderr="permission denied")
+        result = subprocess.CompletedProcess([], 1, stdout="client metadata" * 100, stderr="permission denied")
         with patch.object(checker.shutil, "which", return_value="/usr/bin/docker"), \
              patch.object(checker.subprocess, "run", return_value=result):
             check = checker._docker_daemon_check()

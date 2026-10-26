@@ -1,0 +1,33 @@
+# Engineering fixture only: uses a known training solution, never model evidence.
+schema_version = "appworld-oracle-fixture/v1"
+name = "p0-appworld-training-fixture"
+node = "a100-p22"
+ssh_port = 22
+gpu_required = false
+model_provider_required = false
+appworld_package_version = "0.1.3.post1"
+official_data_bundle = "data-0.1.0.bundle"
+data_bundle_sha256 = "fd9f9608c2ec71ed0ac25c3633a738b9129a318a129e31230425b9188e508250"
+reference_snapshot_sha256 = "c47578f41296b6ea57b4ac527c3b65a9a7463e6ee136ca0b5acb03cff503f493"
+reference_task_list = "data/appworld-harbor/split_train147.txt"
+reference_task_list_sha256 = "0363666ab927aec5c4f9e31b854c624274f23ac0ee489c7f240cdc955462edf9"
+split_meaning = "Harness-Zero train147 combines official train and dev; not the final project split"
+
+[positive]
+task_id = "07b42fd_1"
+fixture = "oracle_action"
+expected_reward = 1.0
+
+[negative]
+task_id = "07b42fd_1"
+fixture = "attack"
+expected_reward = 0.0
+
+[execution]
+# This is a declarative contract, not yet a launcher CLI input.
+status = "not_run"
+reference_launcher = "envs/appworld/validate.py"
+reference_launcher_scope = "three positive training fixtures plus one attack fixture"
+reference_launcher_also_checks = ["287e338_3", "2a163ab_3"]
+requires = ["Docker daemon access", "Docker Compose", "official data unpacked", "locked Harbor dependencies", "three AppWorld images built"]
+claim_limit = "environment scoring sanity only; not B0/B1, not student or RSI performance"

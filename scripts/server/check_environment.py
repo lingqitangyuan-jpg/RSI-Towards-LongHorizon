@@ -72,7 +72,8 @@ def _run_command(command: Iterable[str], timeout: int = COMMAND_TIMEOUT_SECONDS)
     except OSError as exc:
         return False, f"could not execute: {exc}", None
 
-    output = "\n".join(part.strip() for part in (completed.stdout, completed.stderr) if part.strip())
+    parts = (completed.stderr, completed.stdout) if completed.returncode else (completed.stdout, completed.stderr)
+    output = "\n".join(part.strip() for part in parts if part.strip())
     # Keep snapshots bounded; command output is diagnostic, not an artifact.
     output = output[:500]
     return completed.returncode == 0, output, completed.returncode

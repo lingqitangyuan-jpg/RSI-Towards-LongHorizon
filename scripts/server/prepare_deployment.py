@@ -109,7 +109,7 @@ def main() -> None:
     }
     (output / "deployment.json").write_text(json.dumps(manifest, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
     checksums = [f"{sha256(path)}  {path.name}" for path in sorted(output.iterdir()) if path.is_file()]
-    (output / "SHA256SUMS").write_text("\n".join(checksums) + "\n", encoding="utf-8")
+    (output / "SHA256SUMS").write_text("\n".join(checksums) + "\n", encoding="utf-8", newline="\n")
     print(json.dumps({k: v for k, v in manifest.items() if k != "excludes"}, ensure_ascii=False, indent=2))
 
 

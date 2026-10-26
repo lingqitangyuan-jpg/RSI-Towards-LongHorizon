@@ -8,7 +8,7 @@ config_version = "0.1"
 seed = 17
 
 [paths]
-# Planned code/data paths, not deployed by the basic Python/CUDA smoke setup.
+# Code is deployed separately; official data still requires unpacking and acceptance.
 project_root = "/nfs-data/sdf/lyf/rsi-long-horizon/code/RSI-Towards-LongHorizon"
 harness_zero_root = "/nfs-data/sdf/lyf/rsi-long-horizon/code/RSI-Towards-LongHorizon/sources/repo/Harness_zero/harness-zero-main"
 appworld_data_root = "/nfs-data/sdf/lyf/rsi-long-horizon/datasets/appworld"
@@ -38,8 +38,8 @@ network_required_for_setup = true
 
 [budget]
 pilot_tasks = 1
-diagnostic_tasks = 20
-diagnostic_max_tasks = 50
+diagnostic_tasks = 5
+diagnostic_max_tasks = 20
 max_rollout_attempts_per_task = 2
 reviewer_max_calls_per_episode = 32
 reviewer_max_replacements_per_episode = 8

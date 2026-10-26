@@ -34,6 +34,10 @@ fi
 
 command -v uv >/dev/null 2>&1 || die "uv is required on the server"
 command -v docker >/dev/null 2>&1 || die "docker is required for AppWorld validation"
+docker info --format '{{.ServerVersion}}' >/dev/null \
+  || die "Docker daemon is not accessible; ask the administrator to enable this account before validation"
+docker compose version >/dev/null 2>&1 \
+  || die "Docker Compose plugin is missing; this validation uses Docker Compose"
 
 project_root="${RSI_PROJECT_ROOT:-$(pwd)}"
 if [[ -z "${RSI_HZ_ROOT:-}" ]]; then
