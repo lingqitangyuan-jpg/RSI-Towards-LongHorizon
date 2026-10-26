@@ -1,0 +1,9 @@
+{
+  "model_id": "Qwen/Qwen3.5-9B",
+  "revision": "c202236235762e1c871ad0ccb60c8ee5ba337b9a",
+  "files_verified": 14,
+  "weight_bytes": 19306310880,
+  "status": "pass",
+  "verified_at_utc": "2026-10-26T15:10:16.869647+00:00",
+  "weight_transport": "modelscope; identity checked against pinned Hugging Face hashes"
+}

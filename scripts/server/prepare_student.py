@@ -140,39 +140,39 @@ def download_model(manifest: dict, destination: Path, mirror: str = "huggingface
                 print("completed weight ranges=" + str(progress[0]), flush=True)
 
     lock = destination / ".download.lock"
-    with lock.open("x"):
-        try:
-            weights = [x for x in manifest["files"] if x["path"].endswith(".safetensors")]
-            with ThreadPoolExecutor(max_workers=4) as pool:
-                list(pool.map(fetch_small, [x for x in manifest["files"] if x not in weights]))
-            pending = []
-            ranges = []
-            for record in weights:
-                if (destination / record["path"]).exists():
-                    verify_file(destination / record["path"], record)
-                    continue
-                pending.append(record)
-                ranges.extend((record, start, min(start + chunk_size, record["bytes"]) - 1)
-                              for start in range(0, record["bytes"], chunk_size))
-            with ThreadPoolExecutor(max_workers=12) as pool:
-                list(pool.map(fetch_range, ranges))
-            for record in pending:
-                partial = destination / (record["path"] + ".partial")
-                with partial.open("wb") as output:
-                    for start in range(0, record["bytes"], chunk_size):
-                        with (chunks / (record["path"] + "." + str(start))).open("rb") as stream:
-                            shutil.copyfileobj(stream, output, 8 * 1024 * 1024)
-                verify_file(partial, record)
-                partial.rename(destination / record["path"])
+    lock.touch(exist_ok=False)
+    try:
+        weights = [x for x in manifest["files"] if x["path"].endswith(".safetensors")]
+        with ThreadPoolExecutor(max_workers=4) as pool:
+            list(pool.map(fetch_small, [x for x in manifest["files"] if x not in weights]))
+        pending = []
+        ranges = []
+        for record in weights:
+            if (destination / record["path"]).exists():
+                verify_file(destination / record["path"], record)
+                continue
+            pending.append(record)
+            ranges.extend((record, start, min(start + chunk_size, record["bytes"]) - 1)
+                          for start in range(0, record["bytes"], chunk_size))
+        with ThreadPoolExecutor(max_workers=12) as pool:
+            list(pool.map(fetch_range, ranges))
+        for record in pending:
+            partial = destination / (record["path"] + ".partial")
+            with partial.open("wb") as output:
                 for start in range(0, record["bytes"], chunk_size):
-                    (chunks / (record["path"] + "." + str(start))).unlink()
-                print("assembled and SHA256 verified " + record["path"], flush=True)
-            report = verify_model(manifest, destination)
-            report["weight_transport"] = mirror
-            (destination / "rsi-model-manifest.json").write_text(json.dumps(manifest, indent=2) + "\n", encoding="utf-8")
-            return report
-        finally:
-            lock.unlink()
+                    with (chunks / (record["path"] + "." + str(start))).open("rb") as stream:
+                        shutil.copyfileobj(stream, output, 8 * 1024 * 1024)
+            verify_file(partial, record)
+            partial.rename(destination / record["path"])
+            for start in range(0, record["bytes"], chunk_size):
+                (chunks / (record["path"] + "." + str(start))).unlink()
+            print("assembled and SHA256 verified " + record["path"], flush=True)
+        report = verify_model(manifest, destination)
+        report["weight_transport"] = mirror
+        (destination / "rsi-model-manifest.json").write_text(json.dumps(manifest, indent=2) + "\n", encoding="utf-8")
+        return report
+    finally:
+        lock.unlink()
 
 
 def prepare_packages(destination: Path) -> dict:

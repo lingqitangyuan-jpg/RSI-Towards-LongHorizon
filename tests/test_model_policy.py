@@ -1,4 +1,7 @@
 from copy import deepcopy
+import importlib.util
+import tempfile
+from unittest.mock import patch
 from pathlib import Path
 import sys
 import unittest
@@ -25,6 +28,25 @@ class FakeBackend:
 
 
 class ModelPolicyTests(unittest.TestCase):
+    def test_download_lock_cleanup_and_existing_lock_are_platform_safe(self):
+        spec = importlib.util.spec_from_file_location("prepare_student", Path(__file__).resolve().parents[1] / "scripts/server/prepare_student.py")
+        prepare = importlib.util.module_from_spec(spec)
+        spec.loader.exec_module(prepare)
+        manifest = {"model_id": "test/no-network", "revision": "fixture", "weight_bytes": 0, "files": []}
+        with tempfile.TemporaryDirectory() as temporary:
+            destination = Path(temporary)
+            lock = destination / ".download.lock"
+            self.assertEqual(prepare.download_model(manifest, destination)["files_verified"], 0)
+            self.assertFalse(lock.exists())
+            with patch.object(prepare, "verify_model", side_effect=ValueError("fixture failure")):
+                with self.assertRaises(ValueError):
+                    prepare.download_model(manifest, destination)
+            self.assertFalse(lock.exists())
+            lock.write_text("another downloader", encoding="utf-8")
+            with self.assertRaises(FileExistsError):
+                prepare.download_model(manifest, destination)
+            self.assertEqual(lock.read_text(encoding="utf-8"), "another downloader")
+
     def test_runner_notifies_student_of_accepted_actions_after_replacement(self):
         class ObserverStudent(DriftStudent):
             def __init__(self):
