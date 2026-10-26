@@ -6,3 +6,4 @@
 | 2026-10-24 | 近期任务跟踪 | EXPERIMENT_TRACKER.md | EXPERIMENT_TRACKER_20261024.md | 待执行任务表；无实验结果 |
 | 2026-10-24 | Harness–Model 文献比较与研究判断 | ../docs/analysis/Harness与Model协同演化_文献比较与研究判断_2026-10-24.md | 同文件 | 四篇直接近邻、三篇校准材料；动机与探索实验建议；更正 SIA 错配引用，无真实实验 |
 | 2026-10-24 | Agent 长程推理与 RSI 文献库 | ../docs/literature/README.md | clusters/*.md | 按五个研究簇收录 Note.md 论文；每篇含动机、方法、实验、谱系与局限 |
+| 2026-10-26 | 服务器连接与使用入门 | ../docs/服务器连接与使用入门.md | 同文件 | 22/9902 只读连通性与状态检查；9901 未连接；基础 SSH、路径、GPU 与安全操作说明 |
