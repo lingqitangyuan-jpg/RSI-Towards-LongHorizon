@@ -4,7 +4,7 @@
 >
 > 分析日期：2026-10-20。对象为本地 `harness-zero-main` 源码快照。本文没有运行训练、模型 API、Docker、基准评测或 pytest；结果数字均为作者报告，不能视为本次复现结果。
 
-阅读导航：先读第1、3、4节建立方法和代码映射，再读第6、7节理解训练与评测；第11节集中讨论你的研究方案。配套的 [HyperAgents 分析](/C:/Users/刘/Desktop/RSI-Towards-LongHorizon/Project/analysis/HyperAgents_代码架构与实验工作流分析.md) 解释改进器代码如何演化与继承。
+阅读导航：先读第1、3、4节建立方法和代码映射，再读第6、7节理解训练与评测；第11节集中讨论你的研究方案。配套的 [HyperAgents 分析](HyperAgents_代码架构与实验工作流分析.md) 解释改进器代码如何演化与继承。
 
 ## 1. 先建立整体认识
 

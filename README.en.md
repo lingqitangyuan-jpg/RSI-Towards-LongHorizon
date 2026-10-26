@@ -32,8 +32,4 @@ sources/                 local reference repositories and papers; excluded from 
 
 The scaffold separates student-visible tasks from controller-side task records, public trajectories from private audits, and action budgets from verifier results. The Harness-Zero integration currently checks expected entry points in a local reference checkout; it does not launch Harbor or AppWorld. The HyperAgents-inspired archive records candidate lineage only; automatic candidate generation, selection, and an RSI outer loop are not implemented.
 
-See [the resource and environment inventory](docs/资源与环境盘点.md), the [benchmark pilot protocol](docs/benchmark_pilot_protocol.md), the current [research question](docs/research_question.md), and the broader [research plan](docs/研究工作规划.md).
-
-See [the Git workflow](docs/git_workflow.md) for the repository, branch, and commit conventions.
-
-See [the server experiment and configuration plan](docs/服务器实验设计与配置.md) for the A100 queue-aware P0/P1 procedure. Server paths, scheduler settings, and model identifiers remain explicit TODOs until the lab confirms them.
+See [the documentation index](docs/README.md) for the current plan, research question, evaluation protocol, server facts, and engineering notes. The active execution list is [docs/plans/近期实验TODO.md](docs/plans/近期实验TODO.md).

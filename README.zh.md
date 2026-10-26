@@ -32,8 +32,6 @@ sources/                 参考仓库和论文的本地副本，不进入 Git
 
 项目已区分学生可见任务与控制器任务、公开交互日志与私有审计日志、动作预算与 verifier 结果。Harness-Zero 接口目前只检查本地参考代码入口，不会启动 Harbor/AppWorld。HyperAgents 风格的 archive 只记录候选资产 lineage，尚未实现自动候选生成、选择或 RSI 外循环。
 
-算力环境初盘和待确认事项见[资源与环境盘点](docs/资源与环境盘点.md)；benchmark pilot 协议见[benchmark_pilot_protocol.md](docs/benchmark_pilot_protocol.md)；当前问题定义见[research_question.md](docs/research_question.md)。广义阶段路线见[研究工作规划](docs/研究工作规划.md)。
+完整文档入口见 [docs/README.md](docs/README.md)。当前执行清单见 [近期实验 TODO](docs/plans/近期实验TODO.md)；研究问题见 [研究问题与假设](docs/research/研究问题与假设.md)；评测定义见 [评测与数据协议](docs/experiments/评测与数据协议.md)。服务器已验收事实见 [资源与环境](docs/environment/资源与环境.md)。
 
-Git 仓库、分支和提交约定见 [Git workflow](docs/git_workflow.md)。
-
-服务器准备和 A100 排队下的 P0/P1 执行方案见[服务器实验设计与配置](docs/服务器实验设计与配置.md)；服务器路径、调度器和模型字段均保留为待确认配置。
+Git 仓库、分支和提交约定见 [Git 工作流](docs/engineering/Git工作流.md)。

@@ -199,4 +199,4 @@ P2 中自训练与 K 组应报告生成预算、有效训练 token、训练算�
 - [P6] Harness-Zero: Harness Distillation. arXiv:2609.24974v1。https://arxiv.org/html/2609.24974v1 。执行前审查、公开轨迹、训练与部署边界。
 - [P7] Hyperagents. arXiv:2603.19461v1。https://arxiv.org/html/2603.19461v1 。§5.2；整个 hyperagent 的迁移和后续改进。
 
-本地依据：Seminar_01/Note.md §§2.1、3.1；Project/refine-logs/EXPERIMENT_PLAN.md。本文没有启动模型调用、服务器部署或训练。
+本地依据：Seminar_01/Note.md §§2.1、3.1；Project/docs/plans/研究路线图.md。本文没有启动模型调用、服务器部署或训练。

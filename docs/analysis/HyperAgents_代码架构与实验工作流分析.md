@@ -5,7 +5,7 @@
 > 本地代码：`C:/Users/刘/Desktop/RSI-Towards-LongHorizon/Project/sources/repo/HyperAgents/HyperAgents`。  
 > 分析方式：静态阅读入口、核心循环、模型适配层、工具、域评测器、配置和分析脚本；未调用模型 API，未构建 Docker，未执行训练或完整基准实验，也未修改源仓库。
 
-阅读导航：先读第1、3、4节理解系统，再读第7、8节连接论文实验；第11、12节集中讨论研究复用和判据。配套的 [Harness-Zero 分析](/C:/Users/刘/Desktop/RSI-Towards-LongHorizon/Project/analysis/Harness-Zero_代码架构与实验工作流分析.md) 解释如何把 Harness 行为转成学生权重中的能力。
+阅读导航：先读第1、3、4节理解系统，再读第7、8节连接论文实验；第11、12节集中讨论研究复用和判据。配套的 [Harness-Zero 分析](Harness-Zero_代码架构与实验工作流分析.md) 解释如何把 Harness 行为转成学生权重中的能力。
 
 ## 1. 先建立正确的整体认识
 
