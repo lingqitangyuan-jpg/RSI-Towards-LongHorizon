@@ -60,14 +60,18 @@ def main() -> int:
         checkpoint_keys = json.loads((root / "model.safetensors.index.json").read_text())["weight_map"]
         vision_or_mtp_count = sum(k.startswith(("model.visual.", "mtp.")) for k in checkpoint_keys)
         model = model.to("cuda:0").eval()
-        terminal_ids = {x for x in [tokenizer.eos_token_id, tokenizer.pad_token_id] if x is not None}
+        if config["stop_policy"] != "tokenizer_eos_or_model_eos":
+            raise ValueError("Unknown pinned stop policy")
+        eos_ids = {tokenizer.eos_token_id} if tokenizer.eos_token_id is not None else set()
         model_eos = model.generation_config.eos_token_id
-        terminal_ids.update(model_eos if isinstance(model_eos, list) else [] if model_eos is None else [model_eos])
+        eos_ids.update(model_eos if isinstance(model_eos, list) else [] if model_eos is None else [model_eos])
+        terminal_ids = eos_ids | ({tokenizer.pad_token_id} if tokenizer.pad_token_id is not None else set())
         emit({"kind": "ready", "model_id": config["model_id"], "revision": config["revision"],
               "transformers": transformers.__version__, "torch": torch.__version__,
               "model_class": type(model).__name__, "gpu_uuid": os.environ["CUDA_VISIBLE_DEVICES"],
               "chat_template_sha256": hashlib.sha256(tokenizer.chat_template.encode()).hexdigest(),
               "parameter_count": sum(p.numel() for p in model.parameters()),
+              "generation_eos_token_ids": sorted(eos_ids), "pad_token_id": tokenizer.pad_token_id,
               "missing_text_parameters": 0, "checkpoint_vision_or_mtp_tensors": vision_or_mtp_count,
               "reported_unexpected_vision_or_mtp_tensors": len(unexpected),
               "initial_gpu_allocated_bytes": torch.cuda.memory_allocated()})
@@ -85,6 +89,7 @@ def main() -> int:
                 if not generation["do_sample"]:
                     for key in ["temperature", "top_p", "top_k"]:
                         generation.pop(key, None)
+                generation["eos_token_id"] = sorted(eos_ids)
                 torch.cuda.reset_peak_memory_stats()
                 started = time.monotonic()
                 with torch.inference_mode():
@@ -94,7 +99,7 @@ def main() -> int:
                 token_ids = tokens.tolist()
                 raw_text = tokenizer.decode(token_ids, skip_special_tokens=False)
                 text = tokenizer.decode(trim_terminal_tokens(token_ids, terminal_ids), skip_special_tokens=False)
-                finish_reason = ("eos" if token_ids and token_ids[-1] in terminal_ids else
+                finish_reason = ("eos" if token_ids and token_ids[-1] in eos_ids else
                                  "length" if len(tokens) >= generation["max_new_tokens"] else "stopped")
                 emit({"kind": "generation", "id": request["id"], "text": text, "raw_text": raw_text,
                       "input_tokens": input_tokens, "output_tokens": len(tokens),
