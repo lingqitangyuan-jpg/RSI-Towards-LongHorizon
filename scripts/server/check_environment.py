@@ -10,8 +10,10 @@ from __future__ import annotations
 
 import argparse
 import json
+import math
 import os
 import platform
+import re
 import shutil
 import subprocess
 import sys
@@ -70,7 +72,7 @@ def _run_command(command: Iterable[str], timeout: int = COMMAND_TIMEOUT_SECONDS)
     except OSError as exc:
         return False, f"could not execute: {exc}", None
 
-    output = (completed.stdout or completed.stderr or "").strip()
+    output = "\n".join(part.strip() for part in (completed.stdout, completed.stderr) if part.strip())
     # Keep snapshots bounded; command output is diagnostic, not an artifact.
     output = output[:500]
     return completed.returncode == 0, output, completed.returncode
@@ -110,6 +112,8 @@ def _path_check(name: str, path: Path, *, required: bool = True, kind: str = "pa
 
 def _disk_check(name: str, path: Path, min_free_gb: float) -> Check:
     probe = path if path.exists() else path.parent
+    while not probe.exists() and probe != probe.parent:
+        probe = probe.parent
     try:
         usage = shutil.disk_usage(probe)
     except OSError as exc:
@@ -146,6 +150,48 @@ def _python_check() -> Check:
         detail,
         {"version": platform.python_version(), "executable": sys.executable},
     )
+
+
+def _docker_daemon_check() -> Check:
+    check = _command_check("docker_daemon", ["docker", "info", "--format", "{{.ServerVersion}}"])
+    if check.status != "ok":
+        return check
+    # A Docker client binary alone does not prove the daemon is usable.
+    if not any(re.fullmatch(r"[0-9]+\.[0-9]+\.[0-9]+(?:[-+].*)?", line.strip())
+               for line in check.detail.splitlines()):
+        return Check("docker_daemon", "fail", "Docker returned no server version", check.value)
+    return check
+
+
+def _data_checks(root: Path, required: bool) -> list[Check]:
+    checks = [_path_check("appworld_data_root", root, required=required, kind="directory")]
+    for name in ("api_docs", "base_dbs", "datasets", "tasks", "version.txt"):
+        checks.append(_path_check("appworld_data_" + name.replace(".", "_"), root / name,
+                                  required=required, kind="file" if name == "version.txt" else "directory"))
+    for split in ("train", "dev", "test_normal"):
+        path = root / "datasets" / (split + ".txt")
+        check = _path_check("appworld_split_" + split, path, required=required, kind="file")
+        if check.status == "ok":
+            ids = path.read_text(encoding="utf-8").split()
+            valid_ids = [task_id for task_id in ids if task_id not in {".", ".."} and all(
+                c.isascii() and (c.isalnum() or c in "_-") for c in task_id)]
+            missing = []
+            if len(valid_ids) != len(ids) or len(set(ids)) != len(ids) or not ids:
+                missing.append("empty, duplicate or invalid task IDs")
+            for task_id in valid_ids:
+                task = root / "tasks" / task_id
+                for name in ("specs.json", "dbs", "ground_truth"):
+                    if not (task / name).exists():
+                        missing.append(task_id + "/" + name)
+            if missing:
+                check = Check(check.name, "fail" if required else "warn",
+                              "incomplete official task data",
+                              {"task_count": len(ids), "missing_count": len(missing), "examples": missing[:5]})
+            else:
+                check = Check(check.name, "ok", "split and task inputs exist; contents were not read",
+                              {"task_count": len(ids), "path": str(path)})
+        checks.append(check)
+    return checks
 
 
 def _gpu_check() -> Check:
@@ -195,6 +241,7 @@ def build_report(
     appworld_data_root: Path,
     run_root: Path,
     min_free_gb: float,
+    require_appworld_data: bool = False,
 ) -> dict[str, Any]:
     """Collect all checks and return a stable report dictionary."""
 
@@ -203,19 +250,22 @@ def build_report(
         _command_check("git", ["git", "--version"]),
         _command_check("uv", ["uv", "--version"]),
         _command_check("docker", ["docker", "--version"]),
+        _docker_daemon_check(),
+        _command_check("docker_compose", ["docker", "compose", "version"]),
         _gpu_check(),
         _path_check("project_root", project_root, kind="directory"),
         _path_check("harness_zero_root", harness_zero_root, kind="directory"),
         _path_check("harness_zero_pyproject", harness_zero_root / "pyproject.toml", kind="file"),
-        _path_check("appworld_data_root", appworld_data_root, required=False, kind="directory"),
+        _path_check("harness_zero_lock", harness_zero_root / "uv.lock", kind="file"),
         _path_check("run_root", run_root, required=False, kind="directory"),
         _disk_check("project_disk", project_root, min_free_gb),
         _disk_check("run_disk", run_root, min_free_gb),
     ]
+    checks.extend(_data_checks(appworld_data_root, require_appworld_data))
     failures = [check.name for check in checks if check.status == "fail"]
     warnings = [check.name for check in checks if check.status == "warn"]
     return {
-        "schema_version": "environment-check/v1",
+        "schema_version": "environment-check/v2",
         "checked_at_utc": datetime.now(timezone.utc).isoformat(),
         "host": {
             "hostname": platform.node(),
@@ -231,6 +281,7 @@ def build_report(
         },
         "checks": [check.to_dict() for check in checks],
         "summary": {
+            "scope": "deployment_preflight_only_not_benchmark_acceptance",
             "status": "fail" if failures else "ok",
             "failure_count": len(failures),
             "warning_count": len(warnings),
@@ -280,6 +331,11 @@ def _parse_args(argv: list[str] | None = None) -> argparse.Namespace:
     )
     parser.add_argument("--output", type=Path, help="Write the JSON report to this file as well as stdout.")
     parser.add_argument(
+        "--require-appworld-data",
+        action="store_true",
+        help="Treat missing/incomplete official data as failures, including task inputs and grading assets.",
+    )
+    parser.add_argument(
         "--strict",
         action="store_true",
         help="Exit 1 when any required check fails; otherwise exit 0 after printing the report.",
@@ -305,8 +361,8 @@ def main(argv: list[str] | None = None) -> int:
         if args.run_root is not None
         else project_root / "runs"
     )
-    if args.min_free_gb < 0:
-        raise SystemExit("--min-free-gb must be non-negative")
+    if not math.isfinite(args.min_free_gb) or args.min_free_gb < 0:
+        raise SystemExit("--min-free-gb must be finite and non-negative")
 
     report = build_report(
         project_root=project_root,
@@ -314,6 +370,7 @@ def main(argv: list[str] | None = None) -> int:
         appworld_data_root=appworld_data_root,
         run_root=run_root,
         min_free_gb=args.min_free_gb,
+        require_appworld_data=args.require_appworld_data,
     )
     encoded = json.dumps(report, ensure_ascii=False, indent=2) + "\n"
     print(encoded, end="")
