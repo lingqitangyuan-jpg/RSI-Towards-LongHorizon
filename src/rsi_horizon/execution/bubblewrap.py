@@ -225,7 +225,23 @@ class SandboxSession:
                 if type(message["id"]) is not int or message["id"] != self.calls:
                     raise IsolationError("Invalid API sequence number")
                 try:
-                    result = dispatch(message)
+                    # A slow public API must not suspend the controller's wall
+                    # deadline. The adapter is intentionally main-thread only.
+                    remaining = deadline - real_time()
+                    if remaining <= 0:
+                        raise SandboxTimeout("Public API deadline exceeded")
+                    previous_handler = signal.getsignal(signal.SIGALRM)
+                    def api_timeout(signum, frame):
+                        raise SandboxTimeout("Public API deadline exceeded")
+                    signal.signal(signal.SIGALRM, api_timeout)
+                    previous_timer = signal.setitimer(signal.ITIMER_REAL, remaining)
+                    try:
+                        result = dispatch(message)
+                    finally:
+                        signal.setitimer(signal.ITIMER_REAL, 0)
+                        signal.signal(signal.SIGALRM, previous_handler)
+                        if previous_timer[0]:
+                            signal.setitimer(signal.ITIMER_REAL, *previous_timer)
                     response = {"id": self.calls, "result": result}
                 except Exception as exc:
                     response = {"id": self.calls, "error": str(exc)[:500]}

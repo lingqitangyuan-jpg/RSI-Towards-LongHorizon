@@ -187,10 +187,10 @@ class RootlessAppWorldEnvironment:
             raise IsolationError("Verifier task mismatch")
         # This evidence comes from Popen, never from the client protocol.
         self.stop_proof = self.client.close()
-        self.stop_proof["observed_at_utc"] = datetime.fromtimestamp(
-            time.clock_gettime(time.CLOCK_REALTIME), timezone.utc).isoformat()
         if not self.stop_proof["stopped"]:
             raise IsolationError("Client stop proof is missing; grading is refused")
+        self.stop_proof["observed_at_utc"] = datetime.fromtimestamp(
+            time.clock_gettime(time.CLOCK_REALTIME), timezone.utc).isoformat()
         write_new_json(self.directory / "stop-proof.json", self.stop_proof)
         self.world._save_state(self.world.output_db_home_path_on_disk)
         self.world.save_logs()

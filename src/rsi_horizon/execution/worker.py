@@ -8,6 +8,7 @@ import functools
 import json
 import os
 import sys
+from importlib.machinery import ModuleSpec
 from types import ModuleType
 
 INPUT = sys.stdin
@@ -123,6 +124,21 @@ def main():
     requester_module = ModuleType("requester")
     requester_module.request = requester.request
     sys.modules["requester"] = requester_module
+    # Official compiled solutions import these two types for annotations.
+    # Supply proxy-only aliases, not the native AppWorld package or any loader
+    # that could import its task/database/grading implementation.
+    compatibility = {}
+    for name in ("appworld", "appworld.collections", "appworld.collections.apis", "appworld.requester"):
+        module = ModuleType(name)
+        module.__path__ = []
+        module.__spec__ = ModuleSpec(name, loader=None, origin="rsi-public-proxy", is_package=True)
+        compatibility[name] = module
+        sys.modules[name] = module
+    compatibility["appworld"].collections = compatibility["appworld.collections"]
+    compatibility["appworld"].requester = compatibility["appworld.requester"]
+    compatibility["appworld.collections"].apis = compatibility["appworld.collections.apis"]
+    compatibility["appworld.collections.apis"].ApiCollection = type(apis)
+    compatibility["appworld.requester"].Requester = Requester
     namespace = {"__name__": "__main__", "apis": apis, "requester": requester}
     emit({"kind": "ready"})
     while True:

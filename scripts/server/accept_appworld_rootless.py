@@ -48,7 +48,10 @@ for path in HIDDEN_PATHS:
     else:
         checks["hidden:"+path]=False
 checks["clean_environment"]=os.getenv("RSI_ACCEPTANCE_SECRET") is None
-checks["appworld_not_installed"]=importlib.util.find_spec("appworld") is None
+checks["native_appworld_not_installed"]=importlib.util.find_spec("appworld.task") is None
+from appworld.collections.apis import ApiCollection
+from appworld.requester import Requester as ProxyRequester
+checks["typed_imports_resolve_to_public_proxies"]=ApiCollection is type(apis) and isinstance(requester,ProxyRequester)
 checks["gpu_device_absent"]=not Path("/dev/nvidia0").exists()
 try:
     Path("/work/write-test").write_text("should not be writable")
