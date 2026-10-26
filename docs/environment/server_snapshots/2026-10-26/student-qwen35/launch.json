@@ -1,0 +1,23 @@
+{
+  "run_id": "student-p0-20261026-153500",
+  "screen_name": "student_p0_20261026_153500",
+  "command": [
+    "screen",
+    "-L",
+    "-Logfile",
+    "/nfs-data/sdf/lyf/rsi-long-horizon/logs/student-p0-20261026-153500.log",
+    "-dmS",
+    "student_p0_20261026_153500",
+    "bash",
+    "-lc",
+    "source /nfs-data/sdf/lyf/rsi-long-horizon/scripts/activate_appworld_rootless.sh && cd /nfs-data/sdf/lyf/rsi-long-horizon/code/RSI-Towards-LongHorizon && python scripts/server/run_student_episode.py --run-id student-p0-20261026-153500 --gpu-uuid GPU-4c22f6ad-49dc-85a6-89eb-341c50c28131 --profile engineering-smoke; rc=$?; printf '%s\n' \"$rc\" > /nfs-data/sdf/lyf/rsi-long-horizon/reports/student-p0-20261026-153500.exit; exit \"$rc\""
+  ],
+  "gpu_uuid": "GPU-4c22f6ad-49dc-85a6-89eb-341c50c28131",
+  "git_commit": "f99bbf5dcea049761ef63c1ecc87d049d1687665",
+  "ssh_port": 22,
+  "launched_at_utc": "2026-10-26T15:35:00.848931+00:00",
+  "log_path": "/nfs-data/sdf/lyf/rsi-long-horizon/logs/student-p0-20261026-153500.log",
+  "exit_path": "/nfs-data/sdf/lyf/rsi-long-horizon/reports/student-p0-20261026-153500.exit",
+  "manifest_path": "/nfs-data/sdf/lyf/rsi-long-horizon/runs/student/student-p0-20261026-153500/manifest.json",
+  "profile": "engineering-smoke"
+}

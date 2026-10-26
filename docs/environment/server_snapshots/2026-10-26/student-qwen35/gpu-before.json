@@ -1,0 +1,12 @@
+{
+  "gpu_preflight": {
+    "uuid": "GPU-4c22f6ad-49dc-85a6-89eb-341c50c28131",
+    "name": "NVIDIA A100-SXM4-80GB",
+    "total_mib": 81920,
+    "free_mib": 81151,
+    "utilization_percent": 0,
+    "checked_at_utc": "2026-10-26T15:35:25.790338+00:00"
+  },
+  "python": "3.12.11 | packaged by conda-forge | (main, Jun  4 2025, 14:45:31) [GCC 13.3.0]",
+  "platform": "Linux-5.15.0-176-generic-x86_64-with-glibc2.35"
+}

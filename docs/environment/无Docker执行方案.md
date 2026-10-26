@@ -13,7 +13,7 @@ AppWorld 已装在自己的 Python 环境里。Docker 原本负责执行隔离�
 ## 2. 三部分各自负责什么
 
 ```text
-可信控制器：准备任务、发送代码；未来在这里调用模型和 reviewer
+可信控制器：准备任务、经独立进程调用学生并发送代码；真实 reviewer 待接入
     │ 标准输入/输出管道：传代码、公开 API 请求和结果
     ▼
 Bubblewrap 执行端：运行生成的 Python，仅持有公开 API 代理
@@ -108,7 +108,7 @@ bash scripts/server/run_appworld_rootless.sh
 
 每次生成新 run ID，拒绝覆盖旧结果。长时间任务沿用 screen 和日志/launch manifest；本次已完成的验收无需为了继续研究而重复执行。
 
-**激活脚本只选择 Python、缓存和 backend 标记，不会自动隔离此后所有命令。** 直接运行 python arbitrary.py 仍在宿主执行。必须通过 RootlessAppWorldEnvironment 或上述验收入口，生成代码才进入 Bubblewrap；未来模型 policy 也必须走这个 adapter。
+**激活脚本只选择 Python、缓存和 backend 标记，不会自动隔离此后所有命令。** 直接运行 python arbitrary.py 仍在宿主执行。必须通过 RootlessAppWorldEnvironment 或上述验收入口，生成代码才进入 Bubblewrap；当前真实学生 policy 已走这个 adapter。
 
 在相同 Linux 节点恢复私有工具时，可使用已保留的离线材料：
 
@@ -122,13 +122,15 @@ python scripts/server/prepare_bubblewrap.py install \
 
 ## 7. 范围与下一步
 
-已通过 29 项隔离、10 项流程检查，用一个官方 train 任务验证正确解、空操作、重置和奖励伪造；固定官方解也通过现有 core runner 完成两步执行与评分。**这是工程验收，不是学生模型成绩、B0/B1 或 RSI 收益。**
+最初通过 29 项隔离、10 项流程检查，用一个官方 train 任务验证正确解、空操作、重置和奖励伪造；固定官方解也通过现有 core runner 完成两步执行与评分。
+
+真实学生接入又暴露了两个兼容问题：公开 API 的 app_name/api_name 与代理内部路由参数冲突；末尾裸表达式的值没有回显。现已分别用 positional-only 路由与表达式回显修复，未放宽文件或网络权限。修复后 29/29 隔离、13/13 流程复验通过；Qwen3.5-9B 的真实 8 动作工程链路通过，任务未完成、评分 1/5。EOS 停止规则属于模型协议，见 [学生选型](../experiments/学生模型选择与接入.md)；完整过程见 [学生验收](records/2026-10-26_学生模型接入与验收.md)。**这些结果不构成正式 B0/B1、能力内化或 RSI 收益。**
 
 限制包括：
 
 1. 仅测试一个任务和只读、无网络、有限依赖的 Python profile；新增包、可写挂载、网络或不同 API 家族后需重新验收。
 2. 与宿主共享 Linux 内核，有限探针不构成形式化安全证明，也不等于虚拟机。内核、工具或可信 broker 的缺陷仍可能影响边界。
 3. 评分器属于可信控制面，本轮没有给整个作业施加统一资源沙箱。
-4. 真实模型 policy、学生 episode 和训练后端尚未完成。下一步先明确学生访问方式，补 launcher 与公开轨迹审计，再选 3–5 个不同 API 任务检查兼容性并诊断 B0。
+4. 当前仅验收 non-thinking/greedy 的 8 动作工程 profile；正式 thinking/64 步候选、真实教师与训练后端仍待验收或实现。下一步先验收正式预算，再选 3–5 个不同 API 任务检查兼容性并诊断 B0。
 
 全程只用 22 节点；不使用 9901、sdk 或 sudo。官方解只用于验收，不进入训练数据。

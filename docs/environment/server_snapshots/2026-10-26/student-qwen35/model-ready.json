@@ -1,0 +1,20 @@
+{
+  "kind": "ready",
+  "model_id": "Qwen/Qwen3.5-9B",
+  "revision": "c202236235762e1c871ad0ccb60c8ee5ba337b9a",
+  "transformers": "5.3.0",
+  "torch": "2.6.0+cu124",
+  "model_class": "Qwen3_5ForCausalLM",
+  "gpu_uuid": "GPU-4c22f6ad-49dc-85a6-89eb-341c50c28131",
+  "chat_template_sha256": "a4aee8afcf2e0711942cf848899be66016f8d14a889ff9ede07bca099c28f715",
+  "parameter_count": 8953803264,
+  "generation_eos_token_ids": [
+    248044,
+    248046
+  ],
+  "pad_token_id": 248044,
+  "missing_text_parameters": 0,
+  "checkpoint_vision_or_mtp_tensors": 348,
+  "reported_unexpected_vision_or_mtp_tensors": 0,
+  "initial_gpu_allocated_bytes": 17907635200
+}

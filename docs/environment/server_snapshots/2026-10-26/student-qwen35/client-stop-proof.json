@@ -1,0 +1,8 @@
+{
+  "client_pid": 1924475,
+  "return_code": -9,
+  "stopped": true,
+  "api_requests": 8,
+  "process_creation_denied": true,
+  "observed_at_utc": "2026-10-26T15:36:23.726479+00:00"
+}

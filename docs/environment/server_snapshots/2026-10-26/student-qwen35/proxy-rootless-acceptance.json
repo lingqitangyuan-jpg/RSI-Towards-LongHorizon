@@ -1,0 +1,204 @@
+{
+  "schema_version": "appworld-rootless-acceptance/v1",
+  "status": "pass",
+  "backend": "bubblewrap-pipe",
+  "run_id": "rootless-proxy-20261026-153343",
+  "task_id": "07b42fd_1",
+  "official_split": "train",
+  "checks": {
+    "isolated_client_checks": true,
+    "negative_before_fails": true,
+    "official_solution_passes": true,
+    "reset_negative_fails": true,
+    "forged_reward_is_not_success": true,
+    "public_initial_profile_matches": true,
+    "all_clients_stopped_before_grading": true,
+    "all_grading_inputs_unchanged": true,
+    "core_runner_bridge_passes": true,
+    "source_data_unchanged": true,
+    "public_api_keyword_arguments_forwarded": true,
+    "requester_keyword_arguments_forwarded": true,
+    "last_expression_displayed": true
+  },
+  "isolation_checks": {
+    "address_space_limit": true,
+    "all_namespaces_differ": true,
+    "clean_environment": true,
+    "cpu_limit": true,
+    "exec_denied": true,
+    "fork_denied": true,
+    "gpu_device_absent": true,
+    "hidden:/home/lyf/.ssh": true,
+    "hidden:/nfs-data/sdf/lyf/rsi-long-horizon/appworld-native/data": true,
+    "hidden:/nfs-data/sdf/lyf/rsi-long-horizon/code": true,
+    "hidden:/nfs-data/sdf/lyf/rsi-long-horizon/runs/rootless/rootless-proxy-20261026-153343/controller-private-canary.txt": true,
+    "hidden:/var/run/docker.sock": true,
+    "native_appworld_not_installed": true,
+    "nested_user_namespace_denied": true,
+    "no_effective_capabilities": true,
+    "no_new_privileges": true,
+    "read_only_filesystem": true,
+    "seccomp_filter_active": true,
+    "socket_creation_denied": true,
+    "task_clock_frozen": true,
+    "typed_imports_resolve_to_public_proxies": true,
+    "python_state_persists": true,
+    "output_is_bounded": true,
+    "controller_canary_unchanged": true,
+    "wall_timeout_enforced": true,
+    "timeout_process_stopped": true,
+    "timed_out_session_cannot_resume": true,
+    "api_deadline_enforced": true,
+    "slow_api_client_stopped": true
+  },
+  "cases": {
+    "no_op_before": {
+      "official_verifier": {
+        "status": "failure",
+        "schema_version": "appworld-rootless-verifier/v1",
+        "success": false,
+        "num_tests": 5,
+        "pass_count": 1,
+        "fail_count": 4,
+        "snapshot_sha256": "aada7de3e7e6c9b552f3b0c0dcdc291d5b163e3ad7c4fde074838d5f78bcd54a",
+        "verifier_process_id": 1912262,
+        "task_id": "07b42fd_1",
+        "client_stopped": true,
+        "snapshot_unchanged": true
+      },
+      "public_profile_sha256": "440c89e97a9d8aca3d8c75a2abbf92c26e2e4a61c0b706e03289b08306f1713e",
+      "attack_checks": {},
+      "public_api_calls": 4,
+      "stop_proof": {
+        "client_pid": 1912122,
+        "return_code": -9,
+        "stopped": true,
+        "api_requests": 4,
+        "process_creation_denied": true,
+        "observed_at_utc": "2026-10-26T15:33:56.155344+00:00"
+      }
+    },
+    "official_solution": {
+      "official_verifier": {
+        "status": "success",
+        "schema_version": "appworld-rootless-verifier/v1",
+        "success": true,
+        "num_tests": 5,
+        "pass_count": 5,
+        "fail_count": 0,
+        "snapshot_sha256": "091fb8694b506db4199cf8ffc44b043f9764a23c1eb21e34c01f24d9a11bb91d",
+        "verifier_process_id": 1912932,
+        "task_id": "07b42fd_1",
+        "client_stopped": true,
+        "snapshot_unchanged": true
+      },
+      "public_profile_sha256": "440c89e97a9d8aca3d8c75a2abbf92c26e2e4a61c0b706e03289b08306f1713e",
+      "attack_checks": {},
+      "public_api_calls": 16,
+      "stop_proof": {
+        "client_pid": 1912766,
+        "return_code": -9,
+        "stopped": true,
+        "api_requests": 16,
+        "process_creation_denied": true,
+        "observed_at_utc": "2026-10-26T15:34:02.904330+00:00"
+      }
+    },
+    "reset_no_op": {
+      "official_verifier": {
+        "status": "failure",
+        "schema_version": "appworld-rootless-verifier/v1",
+        "success": false,
+        "num_tests": 5,
+        "pass_count": 1,
+        "fail_count": 4,
+        "snapshot_sha256": "aada7de3e7e6c9b552f3b0c0dcdc291d5b163e3ad7c4fde074838d5f78bcd54a",
+        "verifier_process_id": 1913502,
+        "task_id": "07b42fd_1",
+        "client_stopped": true,
+        "snapshot_unchanged": true
+      },
+      "public_profile_sha256": "440c89e97a9d8aca3d8c75a2abbf92c26e2e4a61c0b706e03289b08306f1713e",
+      "attack_checks": {},
+      "public_api_calls": 1,
+      "stop_proof": {
+        "client_pid": 1913373,
+        "return_code": -9,
+        "stopped": true,
+        "api_requests": 1,
+        "process_creation_denied": true,
+        "observed_at_utc": "2026-10-26T15:34:09.526239+00:00"
+      }
+    },
+    "reward_spoof": {
+      "official_verifier": {
+        "status": "failure",
+        "schema_version": "appworld-rootless-verifier/v1",
+        "success": false,
+        "num_tests": 5,
+        "pass_count": 1,
+        "fail_count": 4,
+        "snapshot_sha256": "aada7de3e7e6c9b552f3b0c0dcdc291d5b163e3ad7c4fde074838d5f78bcd54a",
+        "verifier_process_id": 1913963,
+        "task_id": "07b42fd_1",
+        "client_stopped": true,
+        "snapshot_unchanged": true
+      },
+      "public_profile_sha256": "440c89e97a9d8aca3d8c75a2abbf92c26e2e4a61c0b706e03289b08306f1713e",
+      "attack_checks": {
+        "admin_api_denied": true,
+        "private_method_denied": true,
+        "reward_file_not_writable": true
+      },
+      "public_api_calls": 1,
+      "stop_proof": {
+        "client_pid": 1913941,
+        "return_code": -9,
+        "stopped": true,
+        "api_requests": 3,
+        "process_creation_denied": true,
+        "observed_at_utc": "2026-10-26T15:34:15.866243+00:00"
+      }
+    }
+  },
+  "runner_bridge": {
+    "status": "success",
+    "success": true,
+    "steps": 2,
+    "trajectory_steps": 2,
+    "audit_steps": 2,
+    "official_verifier": {
+      "status": "success",
+      "schema_version": "appworld-rootless-verifier/v1",
+      "success": true,
+      "num_tests": 5,
+      "pass_count": 5,
+      "fail_count": 0,
+      "snapshot_sha256": "091fb8694b506db4199cf8ffc44b043f9764a23c1eb21e34c01f24d9a11bb91d",
+      "verifier_process_id": 1914762,
+      "task_id": "07b42fd_1",
+      "client_stopped": true,
+      "snapshot_unchanged": true
+    },
+    "policy": "fixed official fixture, no model",
+    "error": null
+  },
+  "official_solution_sha256": "d2c493cc2a6d98d2fd8e7fcffa6c6ed1553c7d518e03f2bce75fa0e35560b6ce",
+  "seed": 100,
+  "model_calls": 0,
+  "gpu_used": false,
+  "docker_used": false,
+  "training_export_allowed": false,
+  "claim_limit": "single train fixture; tested shared-kernel isolation profile, not a formal security proof or B0/RSI result",
+  "checked_at_utc": "2026-10-26T15:34:28.010148+00:00",
+  "config_sha256": "d0a0f47bef00e4d55305e2dea31511a0c334b0436996f43f75ab8870d07fa4c3",
+  "git_commit": "f99bbf5dcea049761ef63c1ecc87d049d1687665",
+  "source_sha256": {
+    "scripts/server/accept_appworld_rootless.py": "24777de15414c4137d0370e64013ca44f52270aaaf960a13af3bf46f098d79d3",
+    "scripts/server/rootless_verifier.py": "5a4fad96c9e3210955d9fce5c2133fc98a5e2737d5d8023e717c5231b74a8e00",
+    "src/rsi_horizon/integrations/appworld_rootless.py": "d971f1c07d4b918717dda225e2065322dc5ad444157e526356e55e6bdb069d1d",
+    "src/rsi_horizon/execution/bubblewrap.py": "10b4ab2e7d779221f36308aa845633d5f348762bce0d0ab8b3b96fed6cce0047",
+    "src/rsi_horizon/execution/worker.py": "61991ae75c192b397b726cb0aa5943a17b6bb0755086887f4768adfd86489bbd",
+    "src/rsi_horizon/runner.py": "48d3c315bf35a7508d8b70d731b05a12148daf9ad75501cef8facabf2930009d"
+  }
+}

@@ -1,0 +1,23 @@
+{
+  "run_id": "rootless-proxy-20261026-153343",
+  "screen_name": "rootless_proxy_20261026_153343",
+  "command": [
+    "env",
+    "RSI_ROOTLESS_RUN_ID=rootless-proxy-20261026-153343",
+    "screen",
+    "-L",
+    "-Logfile",
+    "/nfs-data/sdf/lyf/rsi-long-horizon/logs/rootless-proxy-20261026-153343.log",
+    "-dmS",
+    "rootless_proxy_20261026_153343",
+    "bash",
+    "/nfs-data/sdf/lyf/rsi-long-horizon/code/RSI-Towards-LongHorizon/scripts/server/run_appworld_rootless.sh"
+  ],
+  "log_path": "/nfs-data/sdf/lyf/rsi-long-horizon/logs/rootless-proxy-20261026-153343.log",
+  "git_commit": "f99bbf5dcea049761ef63c1ecc87d049d1687665",
+  "ssh_port": 22,
+  "gpu_used": false,
+  "model_calls": 0,
+  "launched_at_utc": "2026-10-26T15:33:43.896977+00:00",
+  "acceptance_path": "/nfs-data/sdf/lyf/rsi-long-horizon/runs/rootless/rootless-proxy-20261026-153343/acceptance.json"
+}

@@ -1,0 +1,28 @@
+{
+  "run_id": "student-p0-20261026-152316",
+  "profile": "engineering-smoke",
+  "condition": "P0-engineering",
+  "task_id": "07b42fd_1",
+  "started_at_utc": "2026-10-26T15:23:16.563887+00:00",
+  "git_commit": "14f35680dc2644e70163d3354534324b4232abfe",
+  "working_tree_clean": true,
+  "model_id": "Qwen/Qwen3.5-9B",
+  "revision": "c202236235762e1c871ad0ccb60c8ee5ba337b9a",
+  "reviewer_enabled": false,
+  "official_solution_loaded": false,
+  "training_performed": false,
+  "test_split_accessed": false,
+  "source_sha256": {
+    "src/rsi_horizon/runner.py": "48d3c315bf35a7508d8b70d731b05a12148daf9ad75501cef8facabf2930009d",
+    "src/rsi_horizon/model_policy.py": "daeb3022736f3d671e3206d4e13f35d4daadd3240bfadf96df9dd0e4d2b1f520",
+    "src/rsi_horizon/integrations/appworld_rootless.py": "d971f1c07d4b918717dda225e2065322dc5ad444157e526356e55e6bdb069d1d",
+    "scripts/server/model_worker.py": "676f9a9786fca64bd83a20e9551473d286946faf1137e6eb8d8259e61e77dd29",
+    "scripts/server/run_student_episode.py": "6941e2c24f1e91c0bb4e7b76dffbc7c9f108c1ffef14d1ba5bac6f456bb35d78"
+  },
+  "status": "error",
+  "phase": "model_protocol_smoke",
+  "error_type": "StudentActionError",
+  "error": "Expected exactly one final Python block",
+  "finished_at_utc": "2026-10-26T15:23:58.824873+00:00",
+  "elapsed_seconds": 42.261013401672244
+}

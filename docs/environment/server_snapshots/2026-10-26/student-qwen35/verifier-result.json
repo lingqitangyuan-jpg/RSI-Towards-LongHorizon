@@ -1,0 +1,13 @@
+{
+  "status": "failure",
+  "schema_version": "appworld-rootless-verifier/v1",
+  "success": false,
+  "num_tests": 5,
+  "pass_count": 1,
+  "fail_count": 4,
+  "snapshot_sha256": "aada7de3e7e6c9b552f3b0c0dcdc291d5b163e3ad7c4fde074838d5f78bcd54a",
+  "verifier_process_id": 1928137,
+  "task_id": "07b42fd_1",
+  "client_stopped": true,
+  "snapshot_unchanged": true
+}

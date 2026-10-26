@@ -1,0 +1,91 @@
+{
+  "annotation_status": "reviewed",
+  "reviewed_at_utc": "2026-10-26T15:39:13.283672+00:00",
+  "engineering_verdict": "pass for prepared single train fixture and current execution profile",
+  "category": "authentication_order_and_step_budget_exhaustion",
+  "first_deviation": {
+    "step_index": 4,
+    "human_action_number": 5,
+    "issue": "follow_artist attempted before acquiring/passing valid authentication; public API returned 401"
+  },
+  "recovery": "Student retrieved public account metadata and logged in during actions 6-8; budget ended before protected operation or completion",
+  "model_capability_conclusion": "single low-budget engineering run only; neither formal B0 performance nor long-horizon/RSI evidence",
+  "steps": [
+    {
+      "step_index": 0,
+      "api_calls": [
+        "apis.api_docs.show_app_descriptions"
+      ],
+      "execution_error_type": null,
+      "public_output_chars": 1276
+    },
+    {
+      "step_index": 1,
+      "api_calls": [
+        "apis.api_docs.show_api_descriptions"
+      ],
+      "execution_error_type": null,
+      "public_output_chars": 8364
+    },
+    {
+      "step_index": 2,
+      "api_calls": [
+        "apis.api_docs.show_api_doc"
+      ],
+      "execution_error_type": null,
+      "public_output_chars": 1772
+    },
+    {
+      "step_index": 3,
+      "api_calls": [
+        "apis.spotify.search_artists",
+        "print"
+      ],
+      "execution_error_type": null,
+      "public_output_chars": 127
+    },
+    {
+      "step_index": 4,
+      "api_calls": [
+        "apis.spotify.follow_artist",
+        "print"
+      ],
+      "execution_error_type": "RuntimeError",
+      "public_output_chars": 175
+    },
+    {
+      "step_index": 5,
+      "api_calls": [
+        "apis.supervisor.show_account_passwords"
+      ],
+      "execution_error_type": null,
+      "public_output_chars": 472
+    },
+    {
+      "step_index": 6,
+      "api_calls": [
+        "apis.supervisor.show_profile"
+      ],
+      "execution_error_type": null,
+      "public_output_chars": 151
+    },
+    {
+      "step_index": 7,
+      "api_calls": [
+        "apis.spotify.login"
+      ],
+      "execution_error_type": null,
+      "public_output_chars": 197
+    }
+  ],
+  "execution_error_count": 1,
+  "public_api_calls": 8,
+  "official_success": false,
+  "official_pass_count": 1,
+  "official_num_tests": 5,
+  "max_input_tokens": 4850,
+  "max_output_tokens": 158,
+  "episode_generation_seconds": 32.160684552043676,
+  "peak_gpu_allocated_bytes": 19195661312,
+  "raw_files_modified": false
+}

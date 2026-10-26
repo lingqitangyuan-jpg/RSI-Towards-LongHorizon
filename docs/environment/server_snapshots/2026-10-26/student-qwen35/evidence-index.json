@@ -1,12 +1,70 @@
 {
-  "phase": "student environment and tokenizer preparation; no GPU/model result yet",
-  "implementation_commit": "5f81cd8ac73b7f58c1eaae6233cf4fac750e2a0d",
+  "phase": "single-task student engineering acceptance; not formal B0 or RSI evidence",
+  "implementation_commit": "f99bbf5dcea049761ef63c1ecc87d049d1687665",
+  "primary_run": "student-p0-20261026-153500",
+  "cpu_reacceptance_run": "rootless-proxy-20261026-153343",
   "ssh_port": 22,
+  "engineering_pipeline_pass": true,
+  "task_success": false,
+  "official_checks": {
+    "passed": 1,
+    "total": 5
+  },
   "files": [
+    {
+      "path": ".gitattributes",
+      "bytes": 8,
+      "sha256": "705fd4d6451a31d36b3df7de96f83f30ac976c9b4a6d1e51671d8e2f33e2d0da"
+    },
+    {
+      "path": "api-audit.json",
+      "bytes": 709,
+      "sha256": "a2c6615d4be44d5105d24235cd538a3265e84eaeb9d1df8330c11679f20e19f5"
+    },
+    {
+      "path": "client-stop-proof.json",
+      "bytes": 181,
+      "sha256": "0f21395cdecd32c36b116221a2c2d5b2bb050db3f187594f17c8c2794a99d409"
+    },
+    {
+      "path": "environment-resolved.toml",
+      "bytes": 1207,
+      "sha256": "d0a0f47bef00e4d55305e2dea31511a0c334b0436996f43f75ab8870d07fa4c3"
+    },
     {
       "path": "environment.json",
       "bytes": 356,
       "sha256": "7273537ed576b940c29a1c567e13fa87107f82705fa91ffb03481db8fa351a2b"
+    },
+    {
+      "path": "first-protocol-failure.json",
+      "bytes": 1326,
+      "sha256": "91f27317a392d6a880732f75908bf73e982da0941ef0efa7bdd57816d661f843"
+    },
+    {
+      "path": "gpu-after.json",
+      "bytes": 167,
+      "sha256": "cc587187a55eefc9ca8a867ca918abed6c6a9aaaf32b8cc25f3a774c48c05089"
+    },
+    {
+      "path": "gpu-before.json",
+      "bytes": 414,
+      "sha256": "a1039977a0621831b512c67efcebd70465ddd415fcbbc3d04796fbc3ff4231b9"
+    },
+    {
+      "path": "launch.json",
+      "bytes": 1259,
+      "sha256": "b049dfe56efda71de692ee15301f9b2ab66ffcbdbac274101e9e677e6a73e684"
+    },
+    {
+      "path": "manifest.json",
+      "bytes": 1994,
+      "sha256": "48275dd70d038c4880ebe00d6de9ee9aa874e32bcdccae24758036407da601af"
+    },
+    {
+      "path": "manual-review.json",
+      "bytes": 2515,
+      "sha256": "18a50bebeefec9eeabb57b92084228fe7ff1c409fddcd0612689021e715c8e15"
     },
     {
       "path": "meta-index.json",
@@ -14,14 +72,99 @@
       "sha256": "4532cc7b41c6b69d809097f92eb0e0470b0cb54383853644178283513929abb2"
     },
     {
+      "path": "model-local-verified.json",
+      "bytes": 315,
+      "sha256": "793b3328ecb3ac12896aa61907d2ea70077f20583fbf64e3766b8bf4e2209e6f"
+    },
+    {
+      "path": "model-ready.json",
+      "bytes": 647,
+      "sha256": "696d5198322c93e2a289ddbebdeabbf405979a4ce033607ffe78f0202c49b7cf"
+    },
+    {
+      "path": "model-server-verified.json",
+      "bytes": 149,
+      "sha256": "447ee7415d047476dc94cf7c3284d99e3bbbf2abc6c852f1ed515601d23821ef"
+    },
+    {
+      "path": "model-smoke.json",
+      "bytes": 290,
+      "sha256": "bf0f72043b8c094c5edbde527a6a313b5582be9705170249536965beaeb066ec"
+    },
+    {
+      "path": "project-unit-tests-v2.txt",
+      "bytes": 5574,
+      "sha256": "358056a5addec50155930d29f5cc1ba4ba427ffd9ae7b93c61ef3b5fda2b64a2"
+    },
+    {
+      "path": "project-unit-tests-v5.txt",
+      "bytes": 6072,
+      "sha256": "1b19eb11d8fbef590f695cad15001db086844cb12245ca05e70857da75ea7f45"
+    },
+    {
       "path": "project-unit-tests.txt",
       "bytes": 5404,
       "sha256": "e8f693ce018feaac0ec756b3ea8b388ac0ca42636665d6a0be5620e83ff2ba33"
     },
     {
+      "path": "protocol-diagnostic.json",
+      "bytes": 2114,
+      "sha256": "a9c773abb7eaa2c86feebddc757fd44ef5742511d285effe66fadf3218652163"
+    },
+    {
+      "path": "proxy-bug-manifest.json",
+      "bytes": 1548,
+      "sha256": "eae838b92887b119f1e8a2ca4dd0a796eccc1e6d1736325ab975a2c90745c246"
+    },
+    {
+      "path": "proxy-bug-manual-review.json",
+      "bytes": 2165,
+      "sha256": "daa1d5e93082654bd260b70cd745b9bdaca4fb8a24181a9f87a7343315bc1de8"
+    },
+    {
+      "path": "proxy-rootless-acceptance.json",
+      "bytes": 7556,
+      "sha256": "05c1d7602ec0bc95d0c717aa8a1bcf4504ade146b86b689ca6f0a3535ff96972"
+    },
+    {
+      "path": "proxy-rootless-launch.json",
+      "bytes": 871,
+      "sha256": "f947401bf94b8f12efc747be03c63535d71ff67f0ae310b3e0917bf4a619964f"
+    },
+    {
+      "path": "run-summary.json",
+      "bytes": 1255,
+      "sha256": "de3690dbb9be4996cc1178f85b9aadce23c14f1e40e882b4658cc46e7bcd5898"
+    },
+    {
+      "path": "second-protocol-failure.json",
+      "bytes": 1327,
+      "sha256": "2d8ab58a5977a83728a18b87b5e95cfa32d1c37f494e5a80fbd40cfb76b11240"
+    },
+    {
+      "path": "second-smoke-output.json",
+      "bytes": 318,
+      "sha256": "fc90c3caa377d6ccc913506426580f0047f22ca3228cbdab028b4e2eca9839bb"
+    },
+    {
+      "path": "student-resolved.json",
+      "bytes": 1044,
+      "sha256": "05584d6c5b228ef248380d0add1d940a99873103c1177c3475f524aafa632c25"
+    },
+    {
+      "path": "tokenizer-stop-diagnostic.json",
+      "bytes": 861,
+      "sha256": "b3102cc8012a99d24c4c3f03bfc1334ef9132e91be6c5220d28a3a8745e60d26"
+    },
+    {
       "path": "tokenizer.json",
       "bytes": 540,
       "sha256": "17eb8a8c10ee8f37fccf3b7d19a76eba2d72d56b0169b87ba42c2352c93cf3ba"
+    },
+    {
+      "path": "verifier-result.json",
+      "bytes": 360,
+      "sha256": "1dad72038594092b58c03f14c83fea3374b1a519aca72081ed87038e9a6987d2"
     }
   ]
 }

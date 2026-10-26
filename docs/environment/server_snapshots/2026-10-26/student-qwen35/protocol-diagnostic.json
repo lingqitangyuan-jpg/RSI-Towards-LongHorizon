@@ -1,0 +1,65 @@
+{
+  "git_commit": "08d33fe31f28e919175a81182102c116b36c5502",
+  "calls": [
+    {
+      "kind": "generation",
+      "id": 1,
+      "text": "```python\nprint(2 + 2)\n```<|im_end|>\n",
+      "input_tokens": 31,
+      "output_tokens": 15,
+      "finish_reason": "eos",
+      "elapsed_seconds": 1.4354666788130999,
+      "peak_gpu_allocated_bytes": 17989365248,
+      "probe": "original-128",
+      "protocol_error": "Expected exactly one final Python block"
+    },
+    {
+      "kind": "generation",
+      "id": 2,
+      "text": "```python\nprint(2 + 2)\n```<|im_end|>\n",
+      "input_tokens": 31,
+      "output_tokens": 15,
+      "finish_reason": "eos",
+      "elapsed_seconds": 0.8263793736696243,
+      "peak_gpu_allocated_bytes": 17989365760,
+      "probe": "original-1024",
+      "protocol_error": "Expected exactly one final Python block"
+    },
+    {
+      "kind": "generation",
+      "id": 3,
+      "text": "```python\nprint(2 + 2)\n```<|im_end|>\n",
+      "input_tokens": 274,
+      "output_tokens": 15,
+      "finish_reason": "eos",
+      "elapsed_seconds": 1.09802814014256,
+      "peak_gpu_allocated_bytes": 18054712320,
+      "probe": "system-128",
+      "protocol_error": "Expected exactly one final Python block"
+    }
+  ],
+  "gpu_preflight": {
+    "uuid": "GPU-4c22f6ad-49dc-85a6-89eb-341c50c28131",
+    "name": "NVIDIA A100-SXM4-80GB",
+    "total_mib": 81920,
+    "free_mib": 81151,
+    "utilization_percent": 0,
+    "checked_at_utc": "2026-10-26T15:19:39.946577+00:00"
+  },
+  "ready": {
+    "kind": "ready",
+    "model_id": "Qwen/Qwen3.5-9B",
+    "revision": "c202236235762e1c871ad0ccb60c8ee5ba337b9a",
+    "transformers": "5.3.0",
+    "torch": "2.6.0+cu124",
+    "model_class": "Qwen3_5ForCausalLM",
+    "gpu_uuid": "GPU-4c22f6ad-49dc-85a6-89eb-341c50c28131",
+    "chat_template_sha256": "a4aee8afcf2e0711942cf848899be66016f8d14a889ff9ede07bca099c28f715",
+    "parameter_count": 8953803264,
+    "missing_text_parameters": 0,
+    "unused_vision_or_mtp_tensors": 0,
+    "initial_gpu_allocated_bytes": 17907635200
+  },
+  "status": "completed",
+  "finished_at_utc": "2026-10-26T15:19:59.636139+00:00"
+}

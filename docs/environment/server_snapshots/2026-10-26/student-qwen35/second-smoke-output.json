@@ -1,0 +1,11 @@
+{
+  "kind": "generation",
+  "id": 1,
+  "text": "```python\nprint(2 + 2)\n```<|im_end|>\n",
+  "raw_text": "```python\nprint(2 + 2)\n```<|im_end|>\n<|endoftext|>",
+  "input_tokens": 31,
+  "output_tokens": 15,
+  "finish_reason": "eos",
+  "elapsed_seconds": 1.7734302636235952,
+  "peak_gpu_allocated_bytes": 17989365248
+}

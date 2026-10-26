@@ -1,0 +1,51 @@
+{
+  "eos_token": "<|im_end|>",
+  "eos_id": 248046,
+  "pad_token": "<|endoftext|>",
+  "pad_id": 248044,
+  "model_eos_id": 248044,
+  "all_special_tokens": [
+    "<|im_end|>",
+    "<|endoftext|>",
+    "<|audio_start|>",
+    "<|audio_end|>",
+    "<|audio_pad|>",
+    "<|image_pad|>",
+    "<|video_pad|>",
+    "<|vision_start|>",
+    "<|vision_end|>"
+  ],
+  "all_special_ids": [
+    248046,
+    248044,
+    248070,
+    248071,
+    248076,
+    248056,
+    248057,
+    248053,
+    248054
+  ],
+  "stop_samples": {
+    "<|im_end|>": {
+      "ids": [
+        248046
+      ],
+      "decoded": "<|im_end|>"
+    },
+    "<|im_end|>\n": {
+      "ids": [
+        248046,
+        198
+      ],
+      "decoded": "<|im_end|>\n"
+    },
+    "<|endoftext|>": {
+      "ids": [
+        248044
+      ],
+      "decoded": "<|endoftext|>"
+    }
+  },
+  "decode_model_eos": "<|endoftext|>"
+}

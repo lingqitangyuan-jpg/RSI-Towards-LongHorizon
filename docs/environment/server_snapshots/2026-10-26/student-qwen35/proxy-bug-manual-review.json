@@ -1,0 +1,83 @@
+{
+  "annotation_status": "reviewed",
+  "reviewed_at_utc": "2026-10-26T15:34:23.825900+00:00",
+  "engineering_verdict": "proxy compatibility failure; do not accept automatic pipeline_pass as sufficient",
+  "category": "infrastructure_api_proxy",
+  "first_deviation": {
+    "step": 0,
+    "issue": "Bare Python API return value was not displayed; next observation had empty output"
+  },
+  "first_explicit_exception": {
+    "step": 1,
+    "error_type": "TypeError",
+    "issue": "Internal call(app_name, api_name, **kwargs) captured public endpoint app_name/api_name keywords"
+  },
+  "steps": [
+    {
+      "step": 0,
+      "call_names": [
+        "apis.api_docs.show_app_descriptions"
+      ],
+      "execution_error_type": null,
+      "output_is_empty": true
+    },
+    {
+      "step": 1,
+      "call_names": [
+        "apis.api_docs.show_api_descriptions"
+      ],
+      "execution_error_type": "TypeError",
+      "output_is_empty": false
+    },
+    {
+      "step": 2,
+      "call_names": [
+        "apis.api_docs.show_api_descriptions"
+      ],
+      "execution_error_type": "TypeError",
+      "output_is_empty": false
+    },
+    {
+      "step": 3,
+      "call_names": [
+        "apis.api_docs.show_api_descriptions"
+      ],
+      "execution_error_type": "TypeError",
+      "output_is_empty": false
+    },
+    {
+      "step": 4,
+      "call_names": [
+        "apis.api_docs.show_api_descriptions"
+      ],
+      "execution_error_type": "TypeError",
+      "output_is_empty": false
+    },
+    {
+      "step": 5,
+      "call_names": [
+        "apis.api_docs.show_api_descriptions"
+      ],
+      "execution_error_type": "TypeError",
+      "output_is_empty": false
+    },
+    {
+      "step": 6,
+      "call_names": [
+        "apis.api_docs.show_api_descriptions"
+      ],
+      "execution_error_type": "TypeError",
+      "output_is_empty": false
+    },
+    {
+      "step": 7,
+      "call_names": [
+        "apis.api_docs.show_api_descriptions"
+      ],
+      "execution_error_type": "TypeError",
+      "output_is_empty": false
+    }
+  ],
+  "model_capability_conclusion": "none; 8-step timeout is confounded by execution adapter bugs",
+  "raw_files_modified": false
+}

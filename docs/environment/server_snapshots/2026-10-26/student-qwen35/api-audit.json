@@ -1,0 +1,44 @@
+{
+  "calls": [
+    {
+      "step": 0,
+      "app": "api_docs",
+      "api": "show_app_descriptions"
+    },
+    {
+      "step": 1,
+      "app": "api_docs",
+      "api": "show_api_descriptions"
+    },
+    {
+      "step": 2,
+      "app": "api_docs",
+      "api": "show_api_doc"
+    },
+    {
+      "step": 3,
+      "app": "spotify",
+      "api": "search_artists"
+    },
+    {
+      "step": 4,
+      "app": "spotify",
+      "api": "follow_artist"
+    },
+    {
+      "step": 5,
+      "app": "supervisor",
+      "api": "show_account_passwords"
+    },
+    {
+      "step": 6,
+      "app": "supervisor",
+      "api": "show_profile"
+    },
+    {
+      "step": 7,
+      "app": "spotify",
+      "api": "login"
+    }
+  ]
+}
