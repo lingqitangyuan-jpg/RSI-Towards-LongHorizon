@@ -96,8 +96,8 @@ def main() -> int:
         smoke = {k: v for k, v in config["engineering_smoke"].items() if k != "max_steps"}
         smoke["max_new_tokens"] = 128
         response = backend.generate([{"role": "user", "content": "Return exactly one Python code block containing print(2 + 2), with no other text."}], smoke)
-        parse_python_response(response["text"], thinking=False)
         write_json(root / "model-smoke.json", response)
+        parse_python_response(response["text"], thinking=False)
         phase = "student_episode"
         task = public_task(world_config)
         student = PythonAgentStudent(backend, config, smoke=args.profile == "engineering-smoke")

@@ -161,7 +161,7 @@ class PythonAgentStudent:
             self.first = False
         response = self.backend.generate(self.messages, self.generation)
         self.generations.append(response)
-        self.calls.append({k: v for k, v in response.items() if k not in {"text", "kind", "id"}})
+        self.calls.append({k: v for k, v in response.items() if k not in {"text", "raw_text", "kind", "id"}})
         code = parse_python_response(response["text"], thinking=self.generation["enable_thinking"])
         self.waiting_for_action = True
         return Action("execute", {"code": code})

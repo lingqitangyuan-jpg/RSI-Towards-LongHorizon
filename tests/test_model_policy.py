@@ -28,6 +28,20 @@ class FakeBackend:
 
 
 class ModelPolicyTests(unittest.TestCase):
+    def test_eos_decoding_newline_does_not_break_strict_python_protocol(self):
+        spec = importlib.util.spec_from_file_location("model_worker", Path(__file__).resolve().parents[1] / "scripts/server/model_worker.py")
+        worker = importlib.util.module_from_spec(spec)
+        spec.loader.exec_module(worker)
+        pieces = {10: chr(96) * 3 + "python\nprint(4)\n" + chr(96) * 3, 9: "<|im_end|>\n", 0: "<|endoftext|>"}
+        decode = lambda ids: "".join(pieces[x] for x in ids)
+        generated = [10, 9, 0]
+        with self.assertRaises(StudentActionError):
+            parse_python_response(decode(generated), thinking=False)
+        clean = worker.trim_terminal_tokens(generated, {9, 0})
+        self.assertEqual(parse_python_response(decode(clean), thinking=False), "print(4)")
+        self.assertEqual(worker.trim_terminal_tokens([9, 10], {9, 0}), [9, 10])
+        self.assertEqual(generated, [10, 9, 0])
+
     def test_download_lock_cleanup_and_existing_lock_are_platform_safe(self):
         spec = importlib.util.spec_from_file_location("prepare_student", Path(__file__).resolve().parents[1] / "scripts/server/prepare_student.py")
         prepare = importlib.util.module_from_spec(spec)

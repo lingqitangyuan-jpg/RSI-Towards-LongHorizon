@@ -17,6 +17,13 @@ class ContextBudgetExceeded(ValueError):
     pass
 
 
+def trim_terminal_tokens(token_ids: list[int], terminal_ids: set[int]) -> list[int]:
+    end = len(token_ids)
+    while end and token_ids[end - 1] in terminal_ids:
+        end -= 1
+    return token_ids[:end]
+
+
 def main() -> int:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--config", type=Path, required=True)
@@ -50,13 +57,19 @@ def main() -> int:
         unexpected = loading.get("unexpected_keys", [])
         if any(not x.startswith(("model.visual.", "visual.", "mtp.", "model.mtp.")) for x in unexpected):
             raise RuntimeError("Unexpected non-vision/non-MTP checkpoint keys")
+        checkpoint_keys = json.loads((root / "model.safetensors.index.json").read_text())["weight_map"]
+        vision_or_mtp_count = sum(k.startswith(("model.visual.", "mtp.")) for k in checkpoint_keys)
         model = model.to("cuda:0").eval()
+        terminal_ids = {x for x in [tokenizer.eos_token_id, tokenizer.pad_token_id] if x is not None}
+        model_eos = model.generation_config.eos_token_id
+        terminal_ids.update(model_eos if isinstance(model_eos, list) else [] if model_eos is None else [model_eos])
         emit({"kind": "ready", "model_id": config["model_id"], "revision": config["revision"],
               "transformers": transformers.__version__, "torch": torch.__version__,
               "model_class": type(model).__name__, "gpu_uuid": os.environ["CUDA_VISIBLE_DEVICES"],
               "chat_template_sha256": hashlib.sha256(tokenizer.chat_template.encode()).hexdigest(),
               "parameter_count": sum(p.numel() for p in model.parameters()),
-              "missing_text_parameters": 0, "unused_vision_or_mtp_tensors": len(unexpected),
+              "missing_text_parameters": 0, "checkpoint_vision_or_mtp_tensors": vision_or_mtp_count,
+              "reported_unexpected_vision_or_mtp_tensors": len(unexpected),
               "initial_gpu_allocated_bytes": torch.cuda.memory_allocated()})
         for line in sys.stdin:
             request = json.loads(line)
@@ -78,13 +91,14 @@ def main() -> int:
                     output = model.generate(**inputs, **generation, use_cache=True,
                                             pad_token_id=tokenizer.pad_token_id or tokenizer.eos_token_id)
                 tokens = output[0, input_tokens:]
-                text = tokenizer.decode(tokens, skip_special_tokens=False)
-                for terminal in [tokenizer.eos_token, tokenizer.pad_token]:
-                    if terminal:
-                        text = text.removesuffix(terminal)
-                emit({"kind": "generation", "id": request["id"], "text": text,
+                token_ids = tokens.tolist()
+                raw_text = tokenizer.decode(token_ids, skip_special_tokens=False)
+                text = tokenizer.decode(trim_terminal_tokens(token_ids, terminal_ids), skip_special_tokens=False)
+                finish_reason = ("eos" if token_ids and token_ids[-1] in terminal_ids else
+                                 "length" if len(tokens) >= generation["max_new_tokens"] else "stopped")
+                emit({"kind": "generation", "id": request["id"], "text": text, "raw_text": raw_text,
                       "input_tokens": input_tokens, "output_tokens": len(tokens),
-                      "finish_reason": "length" if len(tokens) >= generation["max_new_tokens"] else "eos",
+                      "finish_reason": finish_reason,
                       "elapsed_seconds": time.monotonic() - started,
                       "peak_gpu_allocated_bytes": torch.cuda.max_memory_allocated()})
             except Exception as exc:
