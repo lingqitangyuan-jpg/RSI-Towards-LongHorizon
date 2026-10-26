@@ -1,0 +1,34 @@
+schema_version = "appworld-rootless/v1"
+backend = "bubblewrap-pipe"
+node = "a100-p22"
+ssh_port = 22
+task_id = "07b42fd_1"
+seed = 100
+appworld_version = "0.1.3.post1"
+data_version = "0.1.0"
+
+[paths]
+storage_root = "/nfs-data/sdf/lyf/rsi-long-horizon"
+appworld_root = "/nfs-data/sdf/lyf/rsi-long-horizon/appworld-native"
+python_prefix = "/nfs-data/sdf/lyf/rsi-long-horizon/envs/rsi-py312"
+client_packages = "/nfs-data/sdf/lyf/rsi-long-horizon/envs/appworld-native-py312/lib/python3.12/site-packages"
+bubblewrap = "/nfs-data/sdf/lyf/rsi-long-horizon/tools/bubblewrap-0.6.1-1ubuntu0.3/usr/bin/bwrap"
+bubblewrap_sha256 = "bf6cf3d4456665f5d80c14eb79a76e0ce87b39a0883e614a161658b4ec33492c"
+
+[limits]
+memory_bytes = 536870912
+cpu_seconds = 15
+step_wall_seconds = 15
+max_code_bytes = 65536
+max_frame_bytes = 1048576
+max_api_calls_per_step = 1000
+max_steps = 64
+max_output_chars = 12000
+
+[policy]
+network = "none; public API RPC uses stdin/stdout pipes"
+filesystem = "read-only minimal runtime; no host workspace or benchmark mounts"
+process_creation = "denied by seccomp"
+grading = "controller-owned snapshot after client process exit; separate verifier process"
+gpu_required = false
+training_export_allowed = false
