@@ -8,6 +8,10 @@ from rsi_horizon.contracts import Action, BenchmarkTask, Observation, TaskSpec
 from rsi_horizon.model_policy import PythonAgentStudent, parse_python_response
 from rsi_horizon.policies import StudentActionError
 from rsi_horizon.runner import run_episode
+from rsi_horizon.benchmark import load_manifest
+from rsi_horizon.environment import ToyStateChain
+from rsi_horizon.policies import DriftStudent
+from rsi_horizon.reviewers import RuleReviewer
 
 
 class FakeBackend:
@@ -21,6 +25,20 @@ class FakeBackend:
 
 
 class ModelPolicyTests(unittest.TestCase):
+    def test_runner_notifies_student_of_accepted_actions_after_replacement(self):
+        class ObserverStudent(DriftStudent):
+            def __init__(self):
+                super().__init__(drift_at=1)
+                self.accepted = []
+            def observe_accepted(self, action, after):
+                self.accepted.append(action)
+        _, tasks = load_manifest(Path(__file__).resolve().parents[1] / "configs/toy_benchmark.toml")
+        student = ObserverStudent()
+        result, trajectory, _ = run_episode(tasks[0], student, ToyStateChain(), RuleReviewer())
+        self.assertTrue(result.success)
+        self.assertEqual(student.accepted, [x.accepted_action for x in trajectory])
+        self.assertTrue(any(x.original_action != x.accepted_action for x in trajectory))
+
     def test_only_final_code_is_executed_after_complete_thinking(self):
         raw = "consider ```python\nprint('not final')\n```\n</think>\n```python\nprint(4)\n```"
         self.assertEqual(parse_python_response(raw, thinking=True), "print(4)")

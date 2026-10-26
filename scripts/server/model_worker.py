@@ -42,14 +42,21 @@ def main() -> int:
             raise RuntimeError("Local model identity does not match config")
         torch.manual_seed(config["seed"])
         tokenizer = AutoTokenizer.from_pretrained(root, local_files_only=True, trust_remote_code=False)
-        model = Qwen3_5ForCausalLM.from_pretrained(root, local_files_only=True,
+        model, loading = Qwen3_5ForCausalLM.from_pretrained(root, local_files_only=True,
             trust_remote_code=False, use_safetensors=True, dtype=torch.bfloat16,
-            attn_implementation=config["attention"]).to("cuda:0").eval()
+            attn_implementation=config["attention"], output_loading_info=True)
+        if loading.get("missing_keys") or loading.get("mismatched_keys") or loading.get("error_msgs"):
+            raise RuntimeError("Pretrained text parameters did not load completely")
+        unexpected = loading.get("unexpected_keys", [])
+        if any(not x.startswith(("model.visual.", "visual.", "mtp.", "model.mtp.")) for x in unexpected):
+            raise RuntimeError("Unexpected non-vision/non-MTP checkpoint keys")
+        model = model.to("cuda:0").eval()
         emit({"kind": "ready", "model_id": config["model_id"], "revision": config["revision"],
               "transformers": transformers.__version__, "torch": torch.__version__,
               "model_class": type(model).__name__, "gpu_uuid": os.environ["CUDA_VISIBLE_DEVICES"],
               "chat_template_sha256": hashlib.sha256(tokenizer.chat_template.encode()).hexdigest(),
               "parameter_count": sum(p.numel() for p in model.parameters()),
+              "missing_text_parameters": 0, "unused_vision_or_mtp_tensors": len(unexpected),
               "initial_gpu_allocated_bytes": torch.cuda.memory_allocated()})
         for line in sys.stdin:
             request = json.loads(line)

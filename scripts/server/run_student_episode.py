@@ -76,6 +76,14 @@ def main() -> int:
     write_json(root / "student_resolved.json", config)
     write_json(root / "launch-arguments.json", vars(args) | {"model_config": str(args.model_config), "environment_config": str(args.environment_config)})
     try:
+        phase = "model_artifact_verification"
+        from prepare_student import verify_model
+        artifact_manifest = json.loads((PROJECT / config["artifact_manifest"]).read_text(encoding="utf-8"))
+        if artifact_manifest["revision"] != config["revision"]:
+            raise ValueError("Model configuration differs from the frozen artifact manifest")
+        verified = verify_model(artifact_manifest, Path(config["model_path"]))
+        write_json(root / "model-artifacts-verified.json", verified)
+        phase = "gpu_preflight"
         gpu = gpu_preflight(args.gpu_uuid)
         write_json(root / "environment_snapshot.json", {"gpu_preflight": gpu, "python": sys.version, "platform": platform.platform()})
         if not manifest["working_tree_clean"]:
@@ -132,10 +140,15 @@ def main() -> int:
         manifest.update({"status": "error", "phase": phase, "error_type": type(exc).__name__, "error": str(exc)})
         return 1
     finally:
-        if env is not None:
-            env.close()
-        if backend is not None:
-            backend.close()
+        cleanup_errors = []
+        for name, resource in [("environment", env), ("model_backend", backend)]:
+            if resource is not None:
+                try:
+                    resource.close()
+                except Exception as exc:
+                    cleanup_errors.append({"resource": name, "error_type": type(exc).__name__, "error": str(exc)})
+        if cleanup_errors:
+            manifest.update({"status": "error", "pipeline_pass": False, "cleanup_errors": cleanup_errors})
         if student is not None:
             with (root / "model-generations-private.jsonl").open("x", encoding="utf-8") as stream:
                 for row in student.generations:
@@ -143,6 +156,8 @@ def main() -> int:
         manifest["finished_at_utc"] = datetime.now(timezone.utc).isoformat()
         manifest["elapsed_seconds"] = time.monotonic() - started
         write_json(root / "manifest.json", manifest)
+        if cleanup_errors:
+            raise RuntimeError("Resource cleanup failed; inspect manifest.json")
 
 
 if __name__ == "__main__":

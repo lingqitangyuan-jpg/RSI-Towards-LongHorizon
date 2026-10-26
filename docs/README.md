@@ -19,7 +19,9 @@
 | 早期官方原生 CPU 验收 | [AppWorld 原生验收](environment/records/2026-10-26_AppWorld原生验收.md) |
 | Docker/Compose 的历史实查与管理员协助事项 | [AppWorld 部署预检](environment/records/2026-10-26_AppWorld部署预检.md) |
 | 怎样登录、激活环境和指定 GPU | [服务器使用入门](environment/服务器使用入门.md) |
+| 为什么选 Qwen3.5-9B、如何接入 | [学生模型选择与接入](experiments/学生模型选择与接入.md) |
 | 代码目前实现到哪里 | [项目架构](engineering/项目架构.md) |
+| 每个代码文件负责什么、接口怎样连通 | [项目代码说明：含伪代码、架构图与数据流图](engineering/项目代码说明.md) |
 | 论文与参考代码的分析 | [文献库](literature/README.md)、[专题分析](analysis/README.md) |
 
 ## 目录职责
@@ -42,11 +44,11 @@ docs/
 | 已有证据 | 尚无证据 |
 |---|---|
 | toy runner、公开/私有日志、SFT JSONL 导出器 | 真实学生模型的一条 AppWorld episode |
-| 22 节点独立 Conda 环境，9 项基础 Python/CUDA 检查通过 | 真实学生/教师访问方式和训练预算 |
+| 22 节点独立 Conda 环境，9 项基础 Python/CUDA 检查通过 | 教师访问方式和训练预算 |
 | Bubblewrap + 管道 RPC；29 项隔离、10 项流程和 31 项项目测试通过 | 全量任务、其他 API/依赖 profile、形式化安全证明 |
 | 单个官方 train 任务：正确解 5/5；空操作/重置/奖励伪造不完成；源数据不变 | 全部数据库与内存状态重置等价 |
-| 真实 AppWorld adapter 与 core runner 固定 oracle 两步桥接 | 真实模型 policy、可审计学生 launcher |
-| 固定的接口边界和配置草案 | 真实学生/教师、checkpoint 重载、B0/B1 或 SFT 收益 |
+| 真实 AppWorld adapter、Qwen 学生 policy 与独立推理进程、可审计 launcher 已实现 | 完整权重部署后的 GPU 加载与真实学生 episode |
+| 固定模型 revision；独立推理环境依赖检查、tokenizer 双模式 CPU 检查通过 | 真实教师、训练 checkpoint 重载、B0/B1 或 SFT 收益 |
 
 **只使用 22 节点；9901 暂停使用；sdk 不可用。**GPU 空闲状态必须在每次运行前重新查看，验收记录不代表当前可占卡。
 

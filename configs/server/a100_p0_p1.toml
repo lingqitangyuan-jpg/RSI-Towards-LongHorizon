@@ -8,10 +8,10 @@ config_version = "0.1"
 seed = 17
 
 [paths]
-# Code is deployed separately; official data still requires unpacking and acceptance.
+# Current deployment prepares one official train fixture, not all splits.
 project_root = "/nfs-data/sdf/lyf/rsi-long-horizon/code/RSI-Towards-LongHorizon"
 harness_zero_root = "/nfs-data/sdf/lyf/rsi-long-horizon/code/RSI-Towards-LongHorizon/sources/repo/Harness_zero/harness-zero-main"
-appworld_data_root = "/nfs-data/sdf/lyf/rsi-long-horizon/datasets/appworld"
+appworld_data_root = "/nfs-data/sdf/lyf/rsi-long-horizon/appworld-native/data"
 run_root = "/nfs-data/sdf/lyf/rsi-long-horizon/runs"
 cache_root = "/nfs-data/sdf/lyf/rsi-long-horizon/cache"
 
@@ -32,8 +32,10 @@ python_min = "3.12"
 python_max_exclusive = "3.14"
 harbor_version = "0.21.0"
 appworld_version = "0.1.3.post1"
-uv_lock_required = true
-docker_required_for_appworld = true
+uv_lock_required = false
+dependency_lock = "configs/server/student_inference_linux_wheels.json"
+docker_required_for_appworld = false
+execution_backend = "bubblewrap-pipe"
 network_required_for_setup = true
 
 [budget]
@@ -48,12 +50,16 @@ max_wall_time_minutes_per_task = 30
 max_total_gpu_hours_p0_p1 = 12
 
 [student]
-model_id = "TODO"
-model_revision = "TODO"
-tokenizer_revision = "TODO"
-chat_template_revision = "TODO"
-temperature = 0.0
-top_p = 1.0
+model_id = "Qwen/Qwen3.5-9B"
+model_revision = "c202236235762e1c871ad0ccb60c8ee5ba337b9a"
+tokenizer_revision = "c202236235762e1c871ad0ccb60c8ee5ba337b9a"
+chat_template_revision = "c202236235762e1c871ad0ccb60c8ee5ba337b9a"
+config = "configs/models/qwen35_9b.toml"
+enable_thinking = true
+temperature = 0.6
+top_p = 0.95
+top_k = 20
+max_new_tokens = 8192
 max_context_tokens = 32768
 
 [teacher]
@@ -70,9 +76,11 @@ review_protocol = "pass_or_replace_before_execution"
 student_observation_view = "public_only"
 
 [benchmark]
-id = "appworld-harbor"
-version = "TODO"
-train_split = "split_train147.txt"
+id = "appworld"
+version = "0.1.0"
+train_split = "official_train_single_prepared_fixture"
+installed_train_task = "07b42fd_1"
+reference_train_split = "split_train147.txt"
 dev_split = "TODO_create_grouped_dev_split"
 test_split = "split_test168.txt"
 challenge_split = "split_challenge417.txt"

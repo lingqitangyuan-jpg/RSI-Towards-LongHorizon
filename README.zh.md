@@ -2,7 +2,7 @@
 
 [English README](README.en.md) · [默认中文入口](README.md)
 
-本项目研究：外部 Harness（执行框架）/审查器诱导的长程行为，能否通过轨迹训练内化到学生模型权重，并在部署时移除审查器后保留。项目仍处于 P0/P1 准备阶段；无 Docker AppWorld adapter 已通过单任务工程验收和现有 runner 的固定 oracle 桥接，真实学生模型与训练后端尚未接入。
+本项目研究：外部 Harness（执行框架）/审查器诱导的长程行为，能否通过轨迹训练内化到学生模型权重，并在部署时移除审查器后保留。项目仍处于 P0/P1 准备阶段；无 Docker AppWorld adapter 已通过单任务工程验收和现有 runner 的固定 oracle 桥接，固定版本 Qwen3.5-9B 的 policy 和推理 launcher 已实现，独立推理环境与 tokenizer 通过 CPU 检查；完整权重 GPU 推理和真实学生 episode 待验收，训练后端尚未实现。
 
 ## 快速开始
 
@@ -40,6 +40,6 @@ sources/                 参考仓库和论文的本地副本，不进入 Git
 
 详见 [无 Docker 执行方案](docs/environment/无Docker执行方案.md)、[验收记录](docs/environment/records/2026-10-26_AppWorld无Docker验收.md) 和 [结果 JSON](docs/environment/server_snapshots/2026-10-26/appworld-rootless/acceptance.json)。Docker/Harbor 保留为未验收的后备路线，不再是当前前置条件。激活 Python 环境不自动隔离任意命令，生成代码必须通过 adapter 执行。
 
-当前只覆盖一个 train fixture 与只读、无网络的 Python profile。共享内核上的有限测试不是安全证明、全 benchmark 验收、真实学生成绩或 RSI 收益。下一步接入真实模型 policy/launcher，再做少量跨 API 诊断任务。9901 继续停用；原 PyTorch 环境保留。官方解源码、解包数据库、含解答的原始日志不提交 Git、不导出训练。
+当前只覆盖一个 train fixture 与只读、无网络的 Python profile。共享内核上的有限测试不是安全证明、全 benchmark 验收、真实学生成绩或 RSI 收益。下一步验收已实现的模型 policy/launcher，再做少量跨 API 诊断任务。选型见 [学生模型选择与接入](docs/experiments/学生模型选择与接入.md)；逐文件职责、伪代码、架构图与数据流图见 [项目代码说明](docs/engineering/项目代码说明.md)。9901 继续停用；原 PyTorch 环境保留。官方解源码、解包数据库、含解答的原始日志不提交 Git、不导出训练。
 
 Git 仓库、分支和提交约定见 [Git 工作流](docs/engineering/Git工作流.md)。

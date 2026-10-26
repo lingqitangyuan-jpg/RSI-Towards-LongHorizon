@@ -10,6 +10,7 @@ from pathlib import Path
 import shutil
 import subprocess
 import sys
+import threading
 import time
 import urllib.request
 
@@ -49,13 +50,13 @@ def verify_model(manifest: dict, destination: Path) -> dict:
             "files_verified": len(manifest["files"]), "weight_bytes": manifest["weight_bytes"]}
 
 
-def download_model(manifest: dict, destination: Path) -> dict:
+def download_model(manifest: dict, destination: Path, mirror: str = "huggingface") -> dict:
     destination.mkdir(parents=True, exist_ok=True)
     required = sum(x["bytes"] for x in manifest["files"] if not (destination / x["path"]).exists())
-    if shutil.disk_usage(destination).free < required + 1024 ** 3:
+    if shutil.disk_usage(destination).free < required * 2 + 1024 ** 3:
         raise RuntimeError("Insufficient free disk for model and temporary download")
 
-    def fetch(record: dict) -> None:
+    def fetch_small(record: dict) -> None:
         if Path(record["path"]).name != record["path"]:
             raise ValueError("Only flat model paths are allowed")
         final = destination / record["path"]
@@ -89,12 +90,85 @@ def download_model(manifest: dict, destination: Path) -> dict:
                     raise
                 time.sleep(2)
 
+    chunks = destination / ".chunks"
+    chunks.mkdir(exist_ok=True)
+    chunk_size = 64 * 1024 * 1024
+    progress_lock = threading.Lock()
+    progress = [0]
+
+    def fetch_range(item) -> None:
+        record, start, end = item
+        part = chunks / (record["path"] + "." + str(start))
+        expected = end - start + 1
+        if not part.exists() or part.stat().st_size != expected:
+            temporary = part.with_name(part.name + ".partial")
+            for attempt in range(3):
+                try:
+                    offset = temporary.stat().st_size if temporary.exists() else 0
+                    if offset > expected:
+                        raise ValueError("Oversized partial range")
+                    if offset < expected:
+                        interval = str(start + offset) + "-" + str(end)
+                        if mirror == "modelscope":
+                            url = "https://modelscope.cn/models/" + manifest["model_id"] + "/resolve/master/" + record["path"]
+                        else:
+                            url = "https://huggingface.co/" + manifest["model_id"] + "/resolve/" + manifest["revision"] + "/" + record["path"]
+                        request = urllib.request.Request(url + "?rsi_range=" + interval,
+                                                         headers={"Range": "bytes=" + interval})
+                        with urllib.request.urlopen(request, timeout=60) as response:
+                            if response.status != 206 or not response.headers.get("Content-Range", "").startswith("bytes " + interval + "/"):
+                                raise ValueError("Server did not return the exact requested range")
+                            with temporary.open("ab" if offset else "wb") as stream:
+                                remaining = expected - offset
+                                while remaining:
+                                    block = response.read(min(1024 * 1024, remaining))
+                                    if not block:
+                                        raise EOFError("Incomplete model range")
+                                    stream.write(block)
+                                    remaining -= len(block)
+                    if temporary.stat().st_size != expected:
+                        raise ValueError("Range size mismatch")
+                    temporary.replace(part)
+                    break
+                except Exception:
+                    if attempt == 2:
+                        raise
+                    time.sleep(2)
+        with progress_lock:
+            progress[0] += 1
+            if progress[0] % 16 == 0:
+                print("completed weight ranges=" + str(progress[0]), flush=True)
+
     lock = destination / ".download.lock"
     with lock.open("x"):
         try:
-            with ThreadPoolExecutor(max_workers=3) as pool:
-                list(pool.map(fetch, manifest["files"]))
+            weights = [x for x in manifest["files"] if x["path"].endswith(".safetensors")]
+            with ThreadPoolExecutor(max_workers=4) as pool:
+                list(pool.map(fetch_small, [x for x in manifest["files"] if x not in weights]))
+            pending = []
+            ranges = []
+            for record in weights:
+                if (destination / record["path"]).exists():
+                    verify_file(destination / record["path"], record)
+                    continue
+                pending.append(record)
+                ranges.extend((record, start, min(start + chunk_size, record["bytes"]) - 1)
+                              for start in range(0, record["bytes"], chunk_size))
+            with ThreadPoolExecutor(max_workers=12) as pool:
+                list(pool.map(fetch_range, ranges))
+            for record in pending:
+                partial = destination / (record["path"] + ".partial")
+                with partial.open("wb") as output:
+                    for start in range(0, record["bytes"], chunk_size):
+                        with (chunks / (record["path"] + "." + str(start))).open("rb") as stream:
+                            shutil.copyfileobj(stream, output, 8 * 1024 * 1024)
+                verify_file(partial, record)
+                partial.rename(destination / record["path"])
+                for start in range(0, record["bytes"], chunk_size):
+                    (chunks / (record["path"] + "." + str(start))).unlink()
+                print("assembled and SHA256 verified " + record["path"], flush=True)
             report = verify_model(manifest, destination)
+            report["weight_transport"] = mirror
             (destination / "rsi-model-manifest.json").write_text(json.dumps(manifest, indent=2) + "\n", encoding="utf-8")
             return report
         finally:
@@ -121,6 +195,7 @@ def main() -> int:
     parser.add_argument("phase", choices=("download-model", "verify-model", "packages"))
     parser.add_argument("--destination", type=Path, required=True)
     parser.add_argument("--manifest", type=Path)
+    parser.add_argument("--mirror", choices=("huggingface", "modelscope"), default="huggingface")
     args = parser.parse_args()
     if args.phase == "packages":
         report = prepare_packages(args.destination)
@@ -128,7 +203,8 @@ def main() -> int:
         if args.manifest is None:
             parser.error("--manifest is required for model operations")
         manifest = json.loads(args.manifest.read_text(encoding="utf-8"))
-        report = (download_model if args.phase == "download-model" else verify_model)(manifest, args.destination)
+        report = (download_model(manifest, args.destination, args.mirror) if args.phase == "download-model"
+                  else verify_model(manifest, args.destination))
     print(json.dumps(report, indent=2), flush=True)
     return 0
 

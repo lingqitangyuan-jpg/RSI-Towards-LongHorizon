@@ -41,11 +41,14 @@
 Docker/Harbor 保留为后备路线，不再列作当前必需任务。历史权限、Compose、镜像和参考任务目录差异见 [部署预检](../environment/records/2026-10-26_AppWorld部署预检.md)。扩展真实任务时仍须核验数据、许可和 verifier 资产，不把当前单任务当全量 benchmark。
 
 - [ ] **P0c：真实学生的一次完整 episode**
-  - [ ] 明确可用学生权重或 API、访问权限、tokenizer/chat template 和调用预算。
+  - [x] 选择官方 Qwen3.5-9B post-trained 权重，固定 revision、官方资产哈希、tokenizer/chat template 与解码预算；见 [学生选型](../experiments/学生模型选择与接入.md)。
+  - [x] 安装独立 student-qwen35-py312 推理环境，28 个离线轮子校验与 pip check 通过；双模式 tokenizer CPU 检查通过。
+  - [ ] 完成约 19.31 GB 权重下载、传输、全文件哈希和指定 GPU 加载/生成检查；目前下载进行中。
   - [x] 实现并验收当前生成代码执行 profile 和私有资产边界；adapter 的 reset/step/verify 及 core runner 固定 oracle 桥接通过。
-  - [ ] 将真实模型 policy 接入 adapter；模型调用在沙箱外，不向执行端暴露 API key；运行时不加载官方解答。
-  - [ ] 固定部署 h0、首个真实训练任务、最大步数和重试规则。
-  - [ ] 补齐真实学生 benchmark launcher、失败退出与 env.close() 清理，沿用公开/私有日志边界。
+  - [x] 实现真实模型 policy：独立推理进程、最终代码块解析、accepted-action 历史回调；模型不在执行沙箱内，运行时不加载官方解答。
+  - [ ] 在服务器验证这条真实模型链，不以单元测试代替实际运行。
+  - [x] 固定最小 h0 提示、07b42fd_1 train fixture；工程 smoke 8 动作/greedy/non-thinking，正式候选 64 动作/thinking，分别记录，禁止混算。
+  - [x] 实现真实学生 launcher、独立评分、失败退出、资源清理和公开/私有日志边界；CPU 单测通过，GPU 路径仍待验收。
   - [ ] 运行 M0+h0，无 reviewer；保存 config_resolved、manifest、公开轨迹、私有审计和独立 verifier。
   - [ ] 人工对齐动作、环境事件、公开 observation 和最终评分。
   - [ ] 填写 run ID、commit、任务 family、依赖深度依据和失败分类，确认 P0 是否通过。
