@@ -12,6 +12,7 @@ from pathlib import Path
 import re
 import subprocess
 import sys
+import time
 import tomllib
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[2] / "src"))
@@ -134,6 +135,19 @@ print(json.dumps({"checks":checks,"namespaces":namespaces},sort_keys=True))
             observed["checks"]["timed_out_session_cannot_resume"] = False
     finally:
         timeout_session.close()
+    slow_session = SandboxSession(profile, apps=["supervisor"], task_datetime=task_datetime)
+    slow_session.profile = replace(profile, step_wall_seconds=1.5)
+    try:
+        try:
+            slow_session.execute("requester.request('supervisor','show_profile')",
+                                 lambda message: time.sleep(10))
+        except SandboxTimeout:
+            observed["checks"]["api_deadline_enforced"] = True
+        else:
+            observed["checks"]["api_deadline_enforced"] = False
+        observed["checks"]["slow_api_client_stopped"] = slow_session.process.poll() is not None
+    finally:
+        slow_session.close()
     write_new_json(run / "isolation.json", observed)
     if not all(observed["checks"].values()):
         raise IsolationError("One or more required isolation checks failed")
@@ -205,6 +219,29 @@ print(json.dumps(results,sort_keys=True))
                               "pass_count": stats["pass_count"], "num_tests": stats["num_tests"]}), flush=True)
         finally:
             env.close()
+    # Exercise the existing runner using a fixed oracle policy, not an LLM.
+    # Keep gold code/trajectories in memory only; export summary statistics.
+    from rsi_horizon.runner import run_episode
+    class OfficialFixturePolicy:
+        artifact_id = "official-oracle-engineering-fixture"
+        def reset(self, public):
+            self.index = 0
+        def act(self, public, observation):
+            code = ("import json; print(json.dumps(apis.supervisor.show_profile(),sort_keys=True))"
+                    if self.index == 0 else source.read_text() + "\nsolution(apis, requester)\n")
+            self.index += 1
+            return Action("execute", {"code": code})
+    bridge = RootlessAppWorldEnvironment(config, run_directory=run / "runner_bridge",
+                                        experiment_name=run_id + "_runner_bridge")
+    try:
+        result, trajectory, audit = run_episode(task, OfficialFixturePolicy(), bridge, max_steps=2)
+        runner_bridge = {"status": result.status, "success": result.success,
+                         "steps": result.steps, "trajectory_steps": len(trajectory),
+                         "audit_steps": len(audit), "official_verifier": result.verifier,
+                         "policy": "fixed official fixture, no model", "error": result.error}
+        write_new_json(run / "runner-bridge.json", runner_bridge)
+    finally:
+        bridge.close()
     unchanged = all(hash_file(asset_root / e["path"]) == e["sha256"] for e in manifest["files"])
     checks = {"isolated_client_checks": all(isolated["checks"].values()),
               "negative_before_fails": not cases["no_op_before"]["official_verifier"]["success"],
@@ -212,13 +249,17 @@ print(json.dumps(results,sort_keys=True))
               "reset_negative_fails": not cases["reset_no_op"]["official_verifier"]["success"],
               "forged_reward_is_not_success": not cases["reward_spoof"]["official_verifier"]["success"],
               "public_initial_profile_matches": len({v["public_profile_sha256"] for v in cases.values()}) == 1,
-              "all_clients_stopped_before_grading": all(v["official_verifier"]["client_stopped"] for v in cases.values()),
-              "all_grading_inputs_unchanged": all(v["official_verifier"]["snapshot_unchanged"] for v in cases.values()),
+              "all_clients_stopped_before_grading": all(v["official_verifier"]["client_stopped"] for v in cases.values())
+                  and runner_bridge["official_verifier"].get("client_stopped", False),
+              "all_grading_inputs_unchanged": all(v["official_verifier"]["snapshot_unchanged"] for v in cases.values())
+                  and runner_bridge["official_verifier"].get("snapshot_unchanged", False),
+              "core_runner_bridge_passes": runner_bridge["success"] and runner_bridge["steps"] == 2,
               "source_data_unchanged": unchanged}
     return {"schema_version": "appworld-rootless-acceptance/v1",
             "status": "pass" if all(checks.values()) else "fail", "backend": "bubblewrap-pipe",
             "run_id": run_id, "task_id": task.public.task_id, "official_split": task.split,
             "checks": checks, "isolation_checks": isolated["checks"], "cases": cases,
+            "runner_bridge": runner_bridge,
             "official_solution_sha256": hash_file(source), "seed": config["seed"],
             "model_calls": 0, "gpu_used": False, "docker_used": False,
             "training_export_allowed": False,
@@ -250,7 +291,8 @@ def main() -> int:
         report["git_commit"] = subprocess.check_output(["git", "-C", str(project), "rev-parse", "HEAD"], text=True).strip()
         paths = [Path(__file__).resolve(), project / "scripts/server/rootless_verifier.py",
                  project / "src/rsi_horizon/integrations/appworld_rootless.py",
-                 project / "src/rsi_horizon/execution/bubblewrap.py", project / "src/rsi_horizon/execution/worker.py"]
+                 project / "src/rsi_horizon/execution/bubblewrap.py", project / "src/rsi_horizon/execution/worker.py",
+                 project / "src/rsi_horizon/runner.py"]
         report["source_sha256"] = {p.relative_to(project).as_posix(): hash_file(p) for p in paths}
         write_new_json(run / "acceptance.json", report)
         print(json.dumps(report, indent=2), flush=True)
