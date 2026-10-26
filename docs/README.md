@@ -1,6 +1,6 @@
 # 项目文档导航
 
-**当前先完成真实 benchmark 的一任务闭环，再判断外部指导与能力内化；基础 CUDA 通过不等于 P0 完成。**
+**无 Docker 执行与官方评分链已验收；当前先接入真实学生，再判断外部指导与能力内化。工程验收不等于 P0 完成。**
 
 更新日期：2026-10-26（Asia/Shanghai）。本目录按用途分类；计划、事实、协议和历史记录分别维护。
 
@@ -14,7 +14,9 @@
 | 查看计划文件之间的关系 | [规划输出索引](plans/规划输出索引.md) |
 | 条件 B0–B4、数据隔离、指标和公平对照 | [评测与数据协议](experiments/评测与数据协议.md) |
 | 服务器、环境和权限的当前事实 | [资源与环境](environment/资源与环境.md) |
-| 最新真实环境验收结果与重跑方式 | [AppWorld 原生验收](environment/records/2026-10-26_AppWorld原生验收.md) |
+| 不用 Docker 如何执行、如何重跑、有哪些边界 | [无 Docker 执行方案](environment/无Docker执行方案.md) |
+| 最新隔离与真实环境验收结果 | [AppWorld 无 Docker 验收](environment/records/2026-10-26_AppWorld无Docker验收.md) |
+| 早期官方原生 CPU 验收 | [AppWorld 原生验收](environment/records/2026-10-26_AppWorld原生验收.md) |
 | Docker/Compose 的历史实查与管理员协助事项 | [AppWorld 部署预检](environment/records/2026-10-26_AppWorld部署预检.md) |
 | 怎样登录、激活环境和指定 GPU | [服务器使用入门](environment/服务器使用入门.md) |
 | 代码目前实现到哪里 | [项目架构](engineering/项目架构.md) |
@@ -40,12 +42,15 @@ docs/
 | 已有证据 | 尚无证据 |
 |---|---|
 | toy runner、公开/私有日志、SFT JSONL 导出器 | 真实学生模型的一条 AppWorld episode |
-| 22 节点独立 Conda 环境，9 项基础 Python/CUDA 检查通过 | Harbor/AppWorld 容器与数据就绪 |
-| 22 节点代码工作树、367 个参考文件校验、最新 23 项项目测试 | Docker 使用权限、Compose 和学生代码隔离 |
-| AppWorld 单个官方 train 任务：正确解 5/5；空操作及重置负例不完成 | 全量任务、全部数据库重置等价和私有评分资产隔离 |
+| 22 节点独立 Conda 环境，9 项基础 Python/CUDA 检查通过 | 真实学生/教师访问方式和训练预算 |
+| Bubblewrap + 管道 RPC；29 项隔离、10 项流程和 31 项项目测试通过 | 全量任务、其他 API/依赖 profile、形式化安全证明 |
+| 单个官方 train 任务：正确解 5/5；空操作/重置/奖励伪造不完成；源数据不变 | 全部数据库与内存状态重置等价 |
+| 真实 AppWorld adapter 与 core runner 固定 oracle 两步桥接 | 真实模型 policy、可审计学生 launcher |
 | 固定的接口边界和配置草案 | 真实学生/教师、checkpoint 重载、B0/B1 或 SFT 收益 |
 
 **只使用 22 节点；9901 暂停使用；sdk 不可用。**GPU 空闲状态必须在每次运行前重新查看，验收记录不代表当前可占卡。
+
+Docker/Harbor 保留为后备方案，不再作为当前路线的前置条件。激活 Python 环境不会自动隔离后续所有命令；生成代码必须经无 Docker adapter 执行。
 
 ## 怎样维护
 

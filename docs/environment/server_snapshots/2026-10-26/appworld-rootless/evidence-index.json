@@ -1,0 +1,101 @@
+{
+  "scope": "only controller metadata, digests, project test logs and aggregate scores; no database, solution source or detailed test requirements",
+  "files": [
+    {
+      "path": "acceptance.json",
+      "server_source": "/nfs-data/sdf/lyf/rsi-long-horizon/runs/rootless/rootless-p0-final-20261026-133633/acceptance.json",
+      "bytes": 7420,
+      "sha256": "6405d756d57676c2704eeca861d6b8d81d8a99695e7968aee1cbd1c4ac5b5da2"
+    },
+    {
+      "path": "isolation.json",
+      "server_source": "/nfs-data/sdf/lyf/rsi-long-horizon/runs/rootless/rootless-p0-final-20261026-133633/isolation.json",
+      "bytes": 1572,
+      "sha256": "c298efad3980b694d163a75be4589d2cbab471aa4fac0c6d4af1684ffb7cf790"
+    },
+    {
+      "path": "runner-bridge.json",
+      "server_source": "/nfs-data/sdf/lyf/rsi-long-horizon/runs/rootless/rootless-p0-final-20261026-133633/runner-bridge.json",
+      "bytes": 576,
+      "sha256": "61007a0c5ed78b0c33a7848c34527895faea1387c415f325ecb4e13e871c70fb"
+    },
+    {
+      "path": "status.json",
+      "server_source": "/nfs-data/sdf/lyf/rsi-long-horizon/reports/rootless-p0-final-20261026-133633.status.json",
+      "bytes": 219,
+      "sha256": "a7fba40bda31c561dd5038c56debf14538911c1fddb7876a8f015e39ae4ab2a2"
+    },
+    {
+      "path": "launch.json",
+      "server_source": "/nfs-data/sdf/lyf/rsi-long-horizon/reports/rootless-p0-final-20261026-133633.launch.json",
+      "bytes": 607,
+      "sha256": "fc54d4e22222ae344ba0fd38fae9345f22606e64deecc16c00d1975af9bd7f32"
+    },
+    {
+      "path": "project-unit-tests.txt",
+      "server_source": "/nfs-data/sdf/lyf/rsi-long-horizon/reports/rootless-p0-final-20261026-133633.project-unit-tests.txt",
+      "bytes": 4424,
+      "sha256": "31ada5885f681b7a6ab8c870d0e0f15fe33b06d8ef9ba3fc390c9aa1f94f930e"
+    },
+    {
+      "path": "installation.json",
+      "server_source": "/nfs-data/sdf/lyf/rsi-long-horizon/reports/bwrap-private-install-20261026.json",
+      "bytes": 1038,
+      "sha256": "1f2a0d46c645c204634384d1a02d4a808851afa725cbb783ba578766830e00d9"
+    },
+    {
+      "path": "reproducible-installation.json",
+      "server_source": "/nfs-data/sdf/lyf/rsi-long-horizon/reports/bwrap-reproducible-install-20261026.json",
+      "bytes": 1172,
+      "sha256": "a228ca11bdaff9da4e42c1fb08e0868a5b1b30a06dab927125a907cca959ae78"
+    },
+    {
+      "path": "first-failed-acceptance.json",
+      "server_source": "/nfs-data/sdf/lyf/rsi-long-horizon/runs/rootless/rootless-p0-20261026-132836/acceptance.json",
+      "bytes": 1120,
+      "sha256": "6be2642ce6a20b5a12cff8e13f9ff94b0d849f4e4433fca94dfa6f03e641636d"
+    },
+    {
+      "path": "first-failed-status.json",
+      "server_source": "/nfs-data/sdf/lyf/rsi-long-horizon/reports/rootless-p0-20261026-132836.status.json",
+      "bytes": 230,
+      "sha256": "819d7d91941be32aa44713337adbec86a54ff861fe6aaa95aaf0e0cb5a675c26"
+    },
+    {
+      "path": "first-launch.json",
+      "server_source": "/nfs-data/sdf/lyf/rsi-long-horizon/reports/rootless-p0-20261026-132836.launch.json",
+      "bytes": 521,
+      "sha256": "24d547af7f00a6ec7c5eba5116057aae8b4e250b8b7a33cfa90a2f417be2ac5e"
+    },
+    {
+      "path": "previous-pass-acceptance.json",
+      "server_source": "/nfs-data/sdf/lyf/rsi-long-horizon/runs/rootless/rootless-p0-retry-20261026-133209/acceptance.json",
+      "bytes": 6570,
+      "sha256": "df07405f0752cc1ada9aed17ee4191da74dc88f1c8c3fe56829a4906cd4dd36c"
+    },
+    {
+      "path": "previous-launch.json",
+      "server_source": "/nfs-data/sdf/lyf/rsi-long-horizon/reports/rootless-p0-retry-20261026-133209.launch.json",
+      "bytes": 601,
+      "sha256": "7a6f45c6f42482c5a55d4c9a3a16357ba0a8e4b93e53f30424c79a7d9175008a"
+    },
+    {
+      "path": "snapshot-comparison.json",
+      "source": "derived from recorded results or host read-only facts",
+      "bytes": 211,
+      "sha256": "9508ab302ba12a5050d45e6147018874d8cbbbb6a5bde877f894c9b3198a07be"
+    },
+    {
+      "path": "host-preflight.json",
+      "source": "derived from recorded results or host read-only facts",
+      "bytes": 221,
+      "sha256": "8c8aa3e8790d2a76cd806a22ecd962018c268d6f5c8c95fafd164274863af62e"
+    },
+    {
+      "path": "upstream-scope.json",
+      "source": "derived from recorded results or host read-only facts",
+      "bytes": 314,
+      "sha256": "bfadbad72bf6c98229f2ba7198e3e46e182b35aa773943f044c100e407e010dc"
+    }
+  ]
+}

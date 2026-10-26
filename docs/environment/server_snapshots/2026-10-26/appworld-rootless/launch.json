@@ -1,0 +1,14 @@
+{
+  "run_id": "rootless-p0-final-20261026-133633",
+  "screen_name": "rootless_p0_final_20261026_133633",
+  "log_file": "/nfs-data/sdf/lyf/rsi-long-horizon/logs/rootless-p0-final-20261026-133633.log",
+  "acceptance_path": "/nfs-data/sdf/lyf/rsi-long-horizon/runs/rootless/rootless-p0-final-20261026-133633/acceptance.json",
+  "git_commit": "32404c4a2873dc22e5f83c6ae6f3837acd80c5ad",
+  "previous_passed_run": "rootless-p0-retry-20261026-133209",
+  "ssh_port": 22,
+  "node": "a100-p22",
+  "model_calls": 0,
+  "gpu_used": false,
+  "docker_used": false,
+  "started_at_utc": "2026-10-26T13:36:33.950150+00:00"
+}

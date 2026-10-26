@@ -1,0 +1,48 @@
+{
+  "checks": {
+    "address_space_limit": true,
+    "all_namespaces_differ": true,
+    "clean_environment": true,
+    "cpu_limit": true,
+    "exec_denied": true,
+    "fork_denied": true,
+    "gpu_device_absent": true,
+    "hidden:/home/lyf/.ssh": true,
+    "hidden:/nfs-data/sdf/lyf/rsi-long-horizon/appworld-native/data": true,
+    "hidden:/nfs-data/sdf/lyf/rsi-long-horizon/code": true,
+    "hidden:/nfs-data/sdf/lyf/rsi-long-horizon/runs/rootless/rootless-p0-final-20261026-133633/controller-private-canary.txt": true,
+    "hidden:/var/run/docker.sock": true,
+    "native_appworld_not_installed": true,
+    "nested_user_namespace_denied": true,
+    "no_effective_capabilities": true,
+    "no_new_privileges": true,
+    "read_only_filesystem": true,
+    "seccomp_filter_active": true,
+    "socket_creation_denied": true,
+    "task_clock_frozen": true,
+    "typed_imports_resolve_to_public_proxies": true,
+    "python_state_persists": true,
+    "output_is_bounded": true,
+    "controller_canary_unchanged": true,
+    "wall_timeout_enforced": true,
+    "timeout_process_stopped": true,
+    "timed_out_session_cannot_resume": true,
+    "api_deadline_enforced": true,
+    "slow_api_client_stopped": true
+  },
+  "namespaces": {
+    "ipc": "ipc:[4026536068]",
+    "mnt": "mnt:[4026536059]",
+    "net": "net:[4026536477]",
+    "pid": "pid:[4026536085]",
+    "user": "user:[4026536554]",
+    "uts": "uts:[4026536067]"
+  },
+  "stop_proof": {
+    "client_pid": 1129250,
+    "return_code": -9,
+    "stopped": true,
+    "api_requests": 0,
+    "process_creation_denied": true
+  }
+}

@@ -1,0 +1,20 @@
+{
+  "schema_version": "appworld-rootless-acceptance/v1",
+  "status": "fail",
+  "error_type": "IsolationError",
+  "error": "Official solution did not execute in the isolated client: ModuleNotFoundError",
+  "run_id": "rootless-p0-20261026-132836",
+  "model_calls": 0,
+  "gpu_used": false,
+  "docker_used": false,
+  "checked_at_utc": "2026-10-26T13:29:09.974625+00:00",
+  "config_sha256": "d0a0f47bef00e4d55305e2dea31511a0c334b0436996f43f75ab8870d07fa4c3",
+  "git_commit": "2f13a28856eeace1c054cf03773d6fdbd4871fdf",
+  "source_sha256": {
+    "scripts/server/accept_appworld_rootless.py": "20b535b18e526974e1e17b8c7824ac9fe69259e0c3c3d21df27923b0656ef3ca",
+    "scripts/server/rootless_verifier.py": "5a4fad96c9e3210955d9fce5c2133fc98a5e2737d5d8023e717c5231b74a8e00",
+    "src/rsi_horizon/integrations/appworld_rootless.py": "8fa0ca475eb2c2063af25af3e5bf6de7ec324a5e965b9c8aea824c379a5edb93",
+    "src/rsi_horizon/execution/bubblewrap.py": "45ec23ad854f88ee30dbb7d0cc4d1dfdaccd3afefa5b88c9efc3ca8d12172bdc",
+    "src/rsi_horizon/execution/worker.py": "030ddc3950a4ac363f6529fe3d090386b606c322cc6ad66524837dd1dd32e01c"
+  }
+}

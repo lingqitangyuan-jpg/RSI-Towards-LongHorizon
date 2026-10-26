@@ -1,0 +1,10 @@
+{
+  "node": "a100-p22",
+  "kernel": "5.15.0-176-generic",
+  "uid": 21007,
+  "glibc": "glibc 2.35",
+  "kernel_unprivileged_userns_clone": "1",
+  "max_user_namespaces": "1029216",
+  "docker_used": false,
+  "ssh_port": 22
+}

@@ -1,0 +1,22 @@
+{
+  "status": "success",
+  "success": true,
+  "steps": 2,
+  "trajectory_steps": 2,
+  "audit_steps": 2,
+  "official_verifier": {
+    "status": "success",
+    "schema_version": "appworld-rootless-verifier/v1",
+    "success": true,
+    "num_tests": 5,
+    "pass_count": 5,
+    "fail_count": 0,
+    "snapshot_sha256": "091fb8694b506db4199cf8ffc44b043f9764a23c1eb21e34c01f24d9a11bb91d",
+    "verifier_process_id": 1133709,
+    "task_id": "07b42fd_1",
+    "client_stopped": true,
+    "snapshot_unchanged": true
+  },
+  "policy": "fixed official fixture, no model",
+  "error": null
+}

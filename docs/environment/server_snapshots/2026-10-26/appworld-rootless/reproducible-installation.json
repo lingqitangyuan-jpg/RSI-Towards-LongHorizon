@@ -1,0 +1,20 @@
+{
+  "package": "bubblewrap",
+  "version": "0.6.1-1ubuntu0.3",
+  "source": "https://security.ubuntu.com/ubuntu/",
+  "filename": "bubblewrap_0.6.1-1ubuntu0.3_amd64.deb",
+  "sha256": "706763714e5d19fc7ab2572a6418506e3a4a5d5960e99309707b58117e6b40cb",
+  "inrelease_sha256": "b371d661986d2504a20356b60c83f8775c7ac264a18d430ac45400fd072e599a",
+  "packages_index_sha256": "9f899f41f568cfab7d806fad8edc55535bed02ca84aae3b06712c223cad668d6",
+  "signature_verification": "gpgv Ubuntu archive keyring: pass",
+  "signature_output": "gpgv: Signature made Sun 25 Oct 2026 01:32:46 PM UTC\ngpgv:                using RSA key F6ECB3762474EDA9D21B7022871920D1991BC93C\ngpgv: Good signature from \"Ubuntu Archive Automatic Signing Key (2018) <ftpmaster@ubuntu.com>\"",
+  "binary": "/nfs-data/sdf/lyf/rsi-long-horizon/tools/bubblewrap-0.6.1-1ubuntu0.3/usr/bin/bwrap",
+  "binary_sha256": "bf6cf3d4456665f5d80c14eb79a76e0ce87b39a0883e614a161658b4ec33492c",
+  "binary_mode": "0o755",
+  "already_installed": true,
+  "uid": 21007,
+  "runtime_version": "bubblewrap 0.6.1",
+  "sudo_used": false,
+  "system_package_database_modified": false,
+  "checked_at_utc": "2026-10-26T13:36:33.632177+00:00"
+}

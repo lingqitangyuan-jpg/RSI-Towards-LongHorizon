@@ -1,0 +1,5 @@
+{
+  "bubblewrap_readme": "https://raw.githubusercontent.com/containers/bubblewrap/main/README.md",
+  "readme_sha256": "0c1dc12c6d94017c45e220fc0e5b679f24c0f09494bdd4bc7157d8abcd75c001",
+  "note": "upstream requires callers to define their own security policy; this project reports finite acceptance checks only"
+}

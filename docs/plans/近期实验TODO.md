@@ -27,25 +27,25 @@
   - [x] 正确解后重新初始化：公开 profile 哈希相同，空操作再次不通过；77 个原始文件哈希均未改变。这里未声称全部数据库等价。
   - [x] 保存 [原生验收记录](../environment/records/2026-10-26_AppWorld原生验收.md) 与摘要证据；首轮失败记录保留，不导出训练轨迹。
 
-- [ ] **P0b-container：容器与隔离路线（按需推进；不阻塞已完成的原生验收）**
-  - [ ] 由管理员启用 22 节点的 Docker 使用权限并提供 Compose 插件，再重新预检。
-  - [x] 核实 appworld==0.1.3.post1 软件包元数据与官方数据包下载入口。
-  - [x] 下载 AppWorld 软件包和 data-0.1.0.bundle，传到 22 节点并通过传输 SHA256 校验。
-  - [ ] 为容器路线准备完整目标范围的数据；核对许可、version.txt、split、任务 DB 和 verifier 资产。原生路线只准备了一个 train 任务，不冒充全量安装。
-  - [ ] 离线准备 Harness-Zero/Harbor 锁定依赖，并在独立运行环境中安装。
-  - [x] 确认参考版本使用 Harbor 0.21.0 和 AppWorld 0.1.3.post1；这不是“已安装”的证据。
-  - [x] 冻结首个 fixture：07b42fd_1，核实属于参考 train147；正例期望 1.0、攻击负例期望 0.0，配置见 configs/server/appworld_oracle_p0.toml。
-  - [ ] 对齐参考任务准备与验证范围：当前 convert.py 生成 315 任务，validate.py 要求 732；按需运行目录只有三个训练 fixture。补齐或适配任务准备入口后再运行。
-  - [ ] 构建 client/world/verifier 三个镜像并保存镜像 ID。
-  - [ ] 用专用 AppWorld environment 运行已知正确解和负例，检查评分、reset、公开 API、私有评分资产隔离。
-  - [ ] 同一训练任务重复 reset，核对初始状态一致。
-  - [ ] 记录模型无关验收结果；它只验证环境，不写成 B0/B1 或方法效果。
+- [x] **P0b-rootless：无 Docker 的执行隔离与流程验收（当前主路线）**
+  - [x] 实查 22 节点普通用户 namespace；私有安装 Bubblewrap 0.6.1-1ubuntu0.3，核验 Ubuntu 签名、软件包与二进制哈希；不使用 sudo。
+  - [x] 实现可复现离线安装入口，重新验证现有安装，无需管理员开放 Docker。
+  - [x] 复用独立 AppWorld venv，以只读最小 Python runtime、namespace、seccomp 和管道 RPC 隔离执行端。
+  - [x] 隔离 home、项目、任务数据、正确解和评分资产；公开 API 由可信 broker 放行；执行端退出后才导出并独立评分。
+  - [x] 完成 29/29 隔离检查及 10/10 流程检查；最终 run 为 rootless-p0-final-20261026-133633，运行代码 32404c4。
+  - [x] 正确解 5/5、空操作/重置空操作/奖励伪造均不完成；初始公开 profile 与导出状态按范围核对，77 个源文件不变。
+  - [x] RootlessAppWorldEnvironment 接入现有 core runner；固定 oracle policy 两步完成，官方评分 5/5；不导出含正确解轨迹。
+  - [x] 本地与服务器各 31 项项目测试通过；保存安装、失败轮次、最终验收和逐文件哈希证据。
+  - [x] 明确只验收一个 train fixture 与当前执行 profile，不作为模型成绩或安全证明。详见 [方案](../environment/无Docker执行方案.md) 与 [验收记录](../environment/records/2026-10-26_AppWorld无Docker验收.md)。
+
+Docker/Harbor 保留为后备路线，不再列作当前必需任务。历史权限、Compose、镜像和参考任务目录差异见 [部署预检](../environment/records/2026-10-26_AppWorld部署预检.md)。扩展真实任务时仍须核验数据、许可和 verifier 资产，不把当前单任务当全量 benchmark。
 
 - [ ] **P0c：真实学生的一次完整 episode**
   - [ ] 明确可用学生权重或 API、访问权限、tokenizer/chat template 和调用预算。
-  - [ ] 验收学生代码执行的隔离环境和私有资产边界；不让模型复用载有官方解答的原生验收进程。
+  - [x] 实现并验收当前生成代码执行 profile 和私有资产边界；adapter 的 reset/step/verify 及 core runner 固定 oracle 桥接通过。
+  - [ ] 将真实模型 policy 接入 adapter；模型调用在沙箱外，不向执行端暴露 API key；运行时不加载官方解答。
   - [ ] 固定部署 h0、首个真实训练任务、最大步数和重试规则。
-  - [ ] 实现或补齐真实 benchmark launcher，沿用核心 runner 的公开/私有日志边界。
+  - [ ] 补齐真实学生 benchmark launcher、失败退出与 env.close() 清理，沿用公开/私有日志边界。
   - [ ] 运行 M0+h0，无 reviewer；保存 config_resolved、manifest、公开轨迹、私有审计和独立 verifier。
   - [ ] 人工对齐动作、环境事件、公开 observation 和最终评分。
   - [ ] 填写 run ID、commit、任务 family、依赖深度依据和失败分类，确认 P0 是否通过。
@@ -53,7 +53,8 @@
 ## P1：失败机制与外部指导
 
 - [ ] **失败诊断**
-  - [ ] 先运行约 3–5 个训练/诊断任务，不直接扩到 20 个。
+  - [ ] 按许可准备 3–5 个不同 API 的训练/诊断任务，核验当前 profile 的依赖、API 兼容性和每任务重置；先不扩到 20 个。
+  - [ ] 用真实学生运行这些任务；将环境兼容性失败与学生推理失败分开，不用官方解成绩替代 B0。
   - [ ] 为每个任务保留预定分母、首次尝试和重试记录。
   - [ ] 人工标注首个可观察偏离：状态遗忘、约束违例、工具协议错误、目标偏移、错误未发现、恢复失败或环境故障。
   - [ ] 记录修复依据是否来自学生可获得的公开历史。
@@ -106,5 +107,5 @@
 ## 关键决策记录
 
 - 2026-10-26：基础环境改在 22 端口节点完成；9901 暂停使用。
-- 2026-10-26：AppWorld 单训练任务的原生工程验收通过；学生 episode、容器隔离及 B0/B1 尚未完成，P0 父任务保持未完成。
+- 2026-10-26：AppWorld 原生验收之后，无 Docker 隔离路线也已通过单任务验收；当前不再等待 Docker 权限。真实学生 episode 与 B0/B1 尚未完成，P0 父任务保持未完成。
 - 2026-10-26：先做 Q0–Q2，A 自动演化和多轮课程不进入当前工程阻塞。

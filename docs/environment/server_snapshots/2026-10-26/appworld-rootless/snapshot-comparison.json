@@ -1,0 +1,6 @@
+{
+  "no_op_equals_reset": true,
+  "no_op_equals_reward_spoof": true,
+  "official_equals_runner_oracle": true,
+  "scope": "official exported state-file hashes, not a claim about every possible in-memory state"
+}

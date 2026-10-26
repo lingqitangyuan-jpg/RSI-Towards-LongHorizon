@@ -2,11 +2,11 @@
 
 [简体中文 README](README.zh.md)
 
-This project asks whether long-horizon behaviors induced by an external harness or reviewer can be internalized into a student model through trajectory training, and retained after the reviewer is removed at deployment. The project is in the P0/P1 preparation stage. The end-to-end agent example remains a deterministic toy demo; no real student model or training backend is connected yet. A separate native CPU acceptance has now passed on one official AppWorld training task.
+This project asks whether long-horizon behaviors induced by an external harness or reviewer can be internalized into a student model through trajectory training, and retained after the reviewer is removed at deployment. The project is in the P0/P1 preparation stage. A rootless AppWorld adapter has passed single-task engineering acceptance and a fixed-oracle bridge through the core runner. No real student model or training backend is connected yet.
 
 ## Quick start
 
-Requires Python 3.11 or newer. The MVP has no third-party Python dependencies.
+Requires Python 3.11 or newer. The toy demo below has no third-party Python dependencies. The server AppWorld backend has separate Linux and package requirements.
 
 ```powershell
 python -m unittest discover -s tests -v
@@ -36,4 +36,8 @@ See [the documentation index](docs/README.md) for the current plan, research que
 
 On the authorized port-22 node, a separate Python 3.12/AppWorld 0.1.3.post1 environment passed dependency checks for 80 packages. For official train task `07b42fd_1`, the official solution passed all 5 verifier checks; no-op cases before and after reinitialization both failed the task. Initial public profiles matched and source data hashes were unchanged. This used no model calls or GPU. See the [native acceptance record](docs/environment/records/2026-10-26_AppWorld原生验收.md) and [result JSON](docs/environment/server_snapshots/2026-10-26/appworld-native/acceptance.json).
 
-The native scripts execute trusted official code only; they do not verify sandbox isolation or provide a student launcher. Docker daemon access, Compose and the Harbor/container route remain pending. Port 9901 remains out of use. The original PyTorch environment is separate. No official solution source, unpacked database or raw solution-containing interaction log is committed or exported for training.
+The native scripts execute trusted official code only. Generated Python now runs through a separate Bubblewrap backend: a read-only minimal runtime, namespaces, seccomp and pipe-based public API RPC. A trusted controller owns AppWorld state; a separate verifier grades an exported snapshot after the client exits. On port 22, 29 isolation checks, 10 workflow checks and 31 project tests passed. The official solution scored 5/5; no-op, reset no-op and reward-spoof cases all failed the task. A fixed official oracle also completed two steps through the existing core runner. This used zero model calls, GPUs, Docker or sudo.
+
+See the [rootless design and operating guide](docs/environment/无Docker执行方案.md), [acceptance record](docs/environment/records/2026-10-26_AppWorld无Docker验收.md), and [machine-readable evidence](docs/environment/server_snapshots/2026-10-26/appworld-rootless/acceptance.json). Docker/Harbor remains an unvalidated fallback, not a prerequisite for this route. Activating the environment does not sandbox arbitrary commands; generated code must go through the adapter.
+
+Acceptance covers one train fixture and the current read-only, network-disabled Python profile. It is a tested shared-kernel boundary, not a formal security proof, full-benchmark validation, real student result or RSI improvement. The next step is a real model policy/launcher, followed by a small cross-API diagnostic set. Port 9901 remains out of use. The original PyTorch environment is separate. No official solution source, unpacked database or raw solution-containing interaction log is committed or exported for training.
