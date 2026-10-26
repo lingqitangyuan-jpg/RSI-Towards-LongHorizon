@@ -1,0 +1,14 @@
+{
+  "status": "pass",
+  "prefix": "/nfs-data/sdf/lyf/rsi-long-horizon/envs/student-qwen35-py312",
+  "base_torch_reused": true,
+  "wheel_count": 28,
+  "versions": {
+    "torch": "2.6.0+cu124",
+    "transformers": "5.3.0",
+    "cuda_runtime": "12.4",
+    "model_class": "Qwen3_5ForCausalLM"
+  },
+  "gpu_used": false,
+  "public_environment_modified": false
+}

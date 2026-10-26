@@ -1,0 +1,10 @@
+{
+  "text_model_parameters": 8953803264,
+  "text_model_tensor_count": 427,
+  "missing_text_tensor_names": [],
+  "unused_vision_or_mtp_tensor_count": 348,
+  "unexpected_other_names": [],
+  "gpu_used": false,
+  "evidence_type": "meta architecture/index names only; not weight loading or generation",
+  "status": "pass"
+}

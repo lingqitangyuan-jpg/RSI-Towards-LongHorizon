@@ -1,0 +1,27 @@
+{
+  "phase": "student environment and tokenizer preparation; no GPU/model result yet",
+  "implementation_commit": "5f81cd8ac73b7f58c1eaae6233cf4fac750e2a0d",
+  "ssh_port": 22,
+  "files": [
+    {
+      "path": "environment.json",
+      "bytes": 356,
+      "sha256": "7273537ed576b940c29a1c567e13fa87107f82705fa91ffb03481db8fa351a2b"
+    },
+    {
+      "path": "meta-index.json",
+      "bytes": 319,
+      "sha256": "4532cc7b41c6b69d809097f92eb0e0470b0cb54383853644178283513929abb2"
+    },
+    {
+      "path": "project-unit-tests.txt",
+      "bytes": 5404,
+      "sha256": "e8f693ce018feaac0ec756b3ea8b388ac0ca42636665d6a0be5620e83ff2ba33"
+    },
+    {
+      "path": "tokenizer.json",
+      "bytes": 540,
+      "sha256": "17eb8a8c10ee8f37fccf3b7d19a76eba2d72d56b0169b87ba42c2352c93cf3ba"
+    }
+  ]
+}

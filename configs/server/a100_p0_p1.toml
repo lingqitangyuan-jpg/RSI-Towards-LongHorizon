@@ -36,7 +36,8 @@ uv_lock_required = false
 dependency_lock = "configs/server/student_inference_linux_wheels.json"
 docker_required_for_appworld = false
 execution_backend = "bubblewrap-pipe"
-network_required_for_setup = true
+network_required_for_setup = false
+workstation_network_required_for_preparation = true
 
 [budget]
 pilot_tasks = 1

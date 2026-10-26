@@ -15,6 +15,7 @@
 | 条件 B0–B4、数据隔离、指标和公平对照 | [评测与数据协议](experiments/评测与数据协议.md) |
 | 服务器、环境和权限的当前事实 | [资源与环境](environment/资源与环境.md) |
 | 不用 Docker 如何执行、如何重跑、有哪些边界 | [无 Docker 执行方案](environment/无Docker执行方案.md) |
+| 学生环境、tokenizer 与模型运行验收 | [学生模型接入与验收](environment/records/2026-10-26_学生模型接入与验收.md) |
 | 最新隔离与真实环境验收结果 | [AppWorld 无 Docker 验收](environment/records/2026-10-26_AppWorld无Docker验收.md) |
 | 早期官方原生 CPU 验收 | [AppWorld 原生验收](environment/records/2026-10-26_AppWorld原生验收.md) |
 | Docker/Compose 的历史实查与管理员协助事项 | [AppWorld 部署预检](environment/records/2026-10-26_AppWorld部署预检.md) |
