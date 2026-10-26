@@ -1,0 +1,31 @@
+schema_version = "appworld-native-acceptance/v1"
+purpose = "trusted engineering checks only; not B0/B1 or sandbox acceptance"
+node = "a100-p22"
+ssh_port = 22
+gpu_required = false
+model_calls = 0
+appworld_version = "0.1.3.post1"
+python_version = "3.12"
+task_id = "07b42fd_1"
+seed = 100
+max_interactions = 64
+max_api_calls_per_interaction = 1000
+execution_timeout_seconds = 100
+
+[paths]
+storage_root = "/nfs-data/sdf/lyf/rsi-long-horizon"
+environment_prefix = "/nfs-data/sdf/lyf/rsi-long-horizon/envs/appworld-native-py312"
+appworld_root = "/nfs-data/sdf/lyf/rsi-long-horizon/appworld-native"
+cache_root = "/nfs-data/sdf/lyf/rsi-long-horizon/cache/appworld-native"
+
+[checks]
+api_read = true
+negative_control = "no_op"
+positive_control = "official_compiled_training_solution"
+reset = "compare_fresh_public_profile_after_positive_control"
+
+[limits]
+arbitrary_model_code_allowed = false
+test_task_execution_allowed = false
+training_export_allowed = false
+isolation_verified = false
