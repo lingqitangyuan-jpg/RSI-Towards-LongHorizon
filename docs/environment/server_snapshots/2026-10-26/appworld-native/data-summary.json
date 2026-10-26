@@ -1,0 +1,14 @@
+{
+  "schema_version": "appworld-native-data/v1",
+  "task_id": "07b42fd_1",
+  "official_split": "train",
+  "data_bundle_sha256": "fd9f9608c2ec71ed0ac25c3633a738b9129a318a129e31230425b9188e508250",
+  "data_version": "0.1.0",
+  "scope": "public assets and one train/dev task; not a full benchmark installation",
+  "file_count": 77,
+  "total_bytes": 139999937,
+  "license": "Protected assets require encrypted public redistribution; keep unpacked assets out of Git",
+  "config_sha256": "2a04bd339019f187392e53293d8d1212ba15b5426a91ff91ecec0003a41fb76c",
+  "script_sha256": "31cfd06898ec9a6cdbae98099d2d15f14b61de547b3fc7a39d4f88bc84900f36",
+  "git_commit": "f1520da6f93f5552caafa9ec9d16ca0b3e24cb6f"
+}

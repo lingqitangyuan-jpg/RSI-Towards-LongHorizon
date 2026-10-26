@@ -1,0 +1,19 @@
+{
+  "python_executable": "/nfs-data/sdf/lyf/rsi-long-horizon/envs/appworld-native-py312/bin/python",
+  "python_version": "3.12.11 | packaged by conda-forge | (main, Jun  4 2025, 14:45:31) [GCC 13.3.0]",
+  "appworld_version": "0.1.3.post1",
+  "environment": {
+    "APPWORLD_ROOT": "/nfs-data/sdf/lyf/rsi-long-horizon/appworld-native",
+    "APPWORLD_CACHE": "/nfs-data/sdf/lyf/rsi-long-horizon/cache/appworld-native",
+    "IPYTHONDIR": "/nfs-data/sdf/lyf/rsi-long-horizon/cache/appworld-native/ipython",
+    "PIP_CACHE_DIR": "/nfs-data/sdf/lyf/rsi-long-horizon/cache/pip",
+    "UV_CACHE_DIR": "/nfs-data/sdf/lyf/rsi-long-horizon/cache/uv",
+    "XDG_CACHE_HOME": "/nfs-data/sdf/lyf/rsi-long-horizon/cache/xdg",
+    "TMPDIR": "/nfs-data/sdf/lyf/rsi-long-horizon/tmp",
+    "CUDA_VISIBLE_DEVICES": "",
+    "VIRTUAL_ENV": "/nfs-data/sdf/lyf/rsi-long-horizon/envs/appworld-native-py312"
+  },
+  "gpu_used": false,
+  "model_calls": 0,
+  "checked_at_utc": "2026-10-26T12:17:15.734840+00:00"
+}

@@ -1,0 +1,77 @@
+{
+  "scope": "sanitized engineering summaries; no database, solution source or raw AppWorld logs",
+  "files": [
+    {
+      "path": "initial-launch.json",
+      "server_source": "/nfs-data/sdf/lyf/rsi-long-horizon/reports/native-p0-20261026-120539.launch.json",
+      "bytes": 1182,
+      "sha256": "e2b4b3f460a8a0d55ee9a52329e7b812ba66639c2f8e58ce967808b43ca5f8c4"
+    },
+    {
+      "path": "initial-status.json",
+      "server_source": "/nfs-data/sdf/lyf/rsi-long-horizon/reports/native-p0-20261026-120539.status.json",
+      "bytes": 214,
+      "sha256": "f7464021cc7fa8fffc1627a7ab44d677b52f6741b80d99f5451178bd0ab684ac"
+    },
+    {
+      "path": "initial-project-unit-tests.txt",
+      "server_source": "/nfs-data/sdf/lyf/rsi-long-horizon/reports/native-p0-20261026-120539.project-unit-tests.txt",
+      "bytes": 3148,
+      "sha256": "d2e071422d0ba3610ed9374315dcaee8eb2c246809500c76338510db71a2c814"
+    },
+    {
+      "path": "data-summary.json",
+      "server_source": "/nfs-data/sdf/lyf/rsi-long-horizon/reports/native-p0-20261026-120539.data.json",
+      "bytes": 698,
+      "sha256": "9da82b43d94040a4dede5d1c38b4f2fdc321f8d420ec446564ba000f873a37b9"
+    },
+    {
+      "path": "packages.txt",
+      "server_source": "/nfs-data/sdf/lyf/rsi-long-horizon/reports/native-p0-20261026-120539.packages.txt",
+      "bytes": 1386,
+      "sha256": "85d448baf449cf806ce6f5b3c52e49de81d1aa3e3856f207a60718e0da57ef01"
+    },
+    {
+      "path": "acceptance.json",
+      "server_source": "/nfs-data/sdf/lyf/rsi-long-horizon/reports/native-p0-retry-20261026-121613.acceptance.json",
+      "bytes": 2629,
+      "sha256": "ee6150cf223e28123faa926837636c3db03fb67ebfa20ae877b9b888f99a38ac"
+    },
+    {
+      "path": "status.json",
+      "server_source": "/nfs-data/sdf/lyf/rsi-long-horizon/reports/native-p0-retry-20261026-121613.status.json",
+      "bytes": 193,
+      "sha256": "55d0834049987d96d0ae6d685cc36979f0aa237e248e60ba292d73ac83d1f2b7"
+    },
+    {
+      "path": "launch.json",
+      "server_source": "/nfs-data/sdf/lyf/rsi-long-horizon/reports/native-p0-retry-20261026-121613.launch.json",
+      "bytes": 572,
+      "sha256": "fd1f74e281e55705c70b761c61d009bf7439d01a071f41a809aaf6c76947777f"
+    },
+    {
+      "path": "project-unit-tests.txt",
+      "server_source": "/nfs-data/sdf/lyf/rsi-long-horizon/reports/native-p0-retry-20261026-121613.project-unit-tests.txt",
+      "bytes": 3320,
+      "sha256": "f5702aff87451755a9a7e6eff840cf8aaf8b855191c8eb6794bbd55794580ea1"
+    },
+    {
+      "path": "activation.json",
+      "server_source": "/nfs-data/sdf/lyf/rsi-long-horizon/reports/native-p0-retry-20261026-121613.activation.json",
+      "bytes": 982,
+      "sha256": "eeed582a9bf582cbe26690f8bd8fb4d1c496396e2b511a9a9bb6548d0fa0b4f0"
+    },
+    {
+      "path": "dependency-check.txt",
+      "server_source": "/nfs-data/sdf/lyf/rsi-long-horizon/reports/native-p0-retry-20261026-121613.dependency-check.txt",
+      "bytes": 165,
+      "sha256": "3701088ed3f7b236b6facb15d0842b92d15e86ad885710a70b2dabdd90182805"
+    },
+    {
+      "path": "offline-wheel-manifest.json",
+      "server_source": "/nfs-data/sdf/lyf/rsi-long-horizon/incoming/appworld-native-py312-glibc235-20261026/manifest.json",
+      "bytes": 18501,
+      "sha256": "f28244600eee337a760e6bc86ee1b70712791285066f90975a45e0726bb0b0da"
+    }
+  ]
+}

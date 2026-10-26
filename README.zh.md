@@ -2,7 +2,7 @@
 
 [English README](README.en.md) · [默认中文入口](README.md)
 
-本项目研究：外部 Harness/审查器诱导的长程行为，能否通过轨迹训练内化到学生模型权重，并在部署时移除审查器后保留。项目仍处于 P0/P1 准备阶段；当前可运行部分是确定性 toy demo，不是长程 benchmark 结果，也没有接入真实模型或训练后端。
+本项目研究：外部 Harness（执行框架）/审查器诱导的长程行为，能否通过轨迹训练内化到学生模型权重，并在部署时移除审查器后保留。项目仍处于 P0/P1 准备阶段；Agent 闭环仍是确定性 toy demo，尚未接入真实学生模型或训练后端。另有一个真实 AppWorld 官方训练任务已通过原生 CPU 工程验收。
 
 ## 快速开始
 
@@ -34,6 +34,8 @@ sources/                 参考仓库和论文的本地副本，不进入 Git
 
 完整文档入口见 [docs/README.md](docs/README.md)。当前执行清单见 [近期实验 TODO](docs/plans/近期实验TODO.md)；研究问题见 [研究问题与假设](docs/research/研究问题与假设.md)；评测定义见 [评测与数据协议](docs/experiments/评测与数据协议.md)。服务器已验收事实见 [资源与环境](docs/environment/资源与环境.md)。
 
-服务器准备工作已增加离线 Git 部署、Harness-Zero 内容哈希快照和官方 AppWorld 材料缓存。获准使用的 22 节点仍待 Docker 使用权限、Compose 插件、依赖安装、数据解包和镜像验收；9901 继续停用。configs/server/appworld_oracle_p0.toml 记录模型无关的工程验收约定，尚未作为 launcher 输入接入，也不是模型实验配置。
+获准使用的 22 节点已安装独立 Python 3.12/AppWorld 0.1.3.post1 环境，80 个包依赖检查通过。官方 train 任务 `07b42fd_1` 的正确解通过 5/5 项评分；空操作在初始化及重置后都不完成任务；初始公开 profile 一致、原始数据哈希不变。本轮模型调用为 0、GPU 使用为 0。详见 [原生验收记录](docs/environment/records/2026-10-26_AppWorld原生验收.md) 和 [结果 JSON](docs/environment/server_snapshots/2026-10-26/appworld-native/acceptance.json)。
+
+原生脚本只执行可信官方代码，尚未验收模型代码隔离，也不是学生 launcher。Docker 使用权限、Compose 和 Harbor/容器路线仍待配置；9901 继续停用。原 PyTorch 环境独立保留。官方解答源码、解包数据库和含解答的原始交互日志不提交 Git、不导出为训练轨迹。
 
 Git 仓库、分支和提交约定见 [Git 工作流](docs/engineering/Git工作流.md)。

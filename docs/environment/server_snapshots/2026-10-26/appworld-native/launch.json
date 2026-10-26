@@ -1,0 +1,14 @@
+{
+  "run_id": "native-p0-retry-20261026-121613",
+  "screen_name": "native_p0_retry_20261026_121613",
+  "log_file": "/nfs-data/sdf/lyf/rsi-long-horizon/logs/native-p0-retry-20261026-121613.log",
+  "report_prefix": "/nfs-data/sdf/lyf/rsi-long-horizon/reports/native-p0-retry-20261026-121613",
+  "git_commit": "4602564b12133dc2529307433bd5a9ee5bb7e6b1",
+  "previous_failed_run": "native-p0-20261026-120539",
+  "mode": "acceptance_only",
+  "node": "a100-p22",
+  "ssh_port": 22,
+  "model_calls": 0,
+  "gpu_used": false,
+  "started_at_utc": "2026-10-26T12:16:14.140984+00:00"
+}

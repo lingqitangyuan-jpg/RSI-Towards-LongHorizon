@@ -1,0 +1,27 @@
+test_archive_path_cannot_escape_allocated_root (test_appworld_native.NativeAcceptanceTests.test_archive_path_cannot_escape_allocated_root) ... ok
+test_no_tests_does_not_count_as_verifier_success (test_appworld_native.NativeAcceptanceTests.test_no_tests_does_not_count_as_verifier_success) ... ok
+test_only_selected_task_assets_are_extracted (test_appworld_native.NativeAcceptanceTests.test_only_selected_task_assets_are_extracted) ... ok
+test_disk_probe_handles_new_nested_run_directory (test_environment_check.EnvironmentCheckTests.test_disk_probe_handles_new_nested_run_directory) ... ok
+test_docker_cli_does_not_hide_daemon_permission_error (test_environment_check.EnvironmentCheckTests.test_docker_cli_does_not_hide_daemon_permission_error) ... ok
+test_missing_data_is_failure_in_acceptance_mode (test_environment_check.EnvironmentCheckTests.test_missing_data_is_failure_in_acceptance_mode) ... ok
+test_split_cannot_escape_task_directory (test_environment_check.EnvironmentCheckTests.test_split_cannot_escape_task_directory) ... ok
+test_split_file_alone_does_not_prove_tasks_exist (test_environment_check.EnvironmentCheckTests.test_split_file_alone_does_not_prove_tasks_exist) ... ok
+test_artifacts_separate_public_and_private_logs (test_mvp.MvpTests.test_artifacts_separate_public_and_private_logs) ... ok
+test_harness_zero_reference_checkout_is_inspectable (test_mvp.MvpTests.test_harness_zero_reference_checkout_is_inspectable) ... ok
+test_hyperagents_candidate_archive_preserves_lineage_and_rejects_duplicates (test_mvp.MvpTests.test_hyperagents_candidate_archive_preserves_lineage_and_rejects_duplicates) ... ok
+test_manifest_has_disjoint_task_ids_and_explicit_depth (test_mvp.MvpTests.test_manifest_has_disjoint_task_ids_and_explicit_depth) ... ok
+test_private_task_record_is_not_passed_to_student (test_mvp.MvpTests.test_private_task_record_is_not_passed_to_student) ... ok
+test_public_observation_rejects_nested_private_metadata (test_mvp.MvpTests.test_public_observation_rejects_nested_private_metadata) ... ok
+test_reviewer_budget_is_finite_and_visible_in_metrics (test_mvp.MvpTests.test_reviewer_budget_is_finite_and_visible_in_metrics) ... ok
+test_reviewer_recovers_state_chain (test_mvp.MvpTests.test_reviewer_recovers_state_chain) ... ok
+test_schema_rejection_and_reset_errors_are_classified (test_mvp.MvpTests.test_schema_rejection_and_reset_errors_are_classified) ... ok
+test_sft_export_uses_only_train_public_trajectory (test_mvp.MvpTests.test_sft_export_uses_only_train_public_trajectory) ... ok
+test_toy_run_is_deterministic (test_mvp.MvpTests.test_toy_run_is_deterministic) ... ok
+test_changed_manifest_is_rejected_before_writes (test_reference_snapshot.ReferenceSnapshotTests.test_changed_manifest_is_rejected_before_writes) ... ok
+test_existing_directory_is_not_overwritten (test_reference_snapshot.ReferenceSnapshotTests.test_existing_directory_is_not_overwritten) ... ok
+test_installs_source_and_preserves_scope_limit (test_reference_snapshot.ReferenceSnapshotTests.test_installs_source_and_preserves_scope_limit) ... ok
+
+----------------------------------------------------------------------
+Ran 22 tests in 0.023s
+
+OK

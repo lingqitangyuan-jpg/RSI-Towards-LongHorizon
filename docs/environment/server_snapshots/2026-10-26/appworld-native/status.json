@@ -1,0 +1,8 @@
+{
+  "schema_version": "appworld-native-job/v1",
+  "last_phase": "complete",
+  "exit_code": 0,
+  "finished_at_utc": "2026-10-26T12:16:32.361481+00:00",
+  "model_calls": 0,
+  "gpu_used": false
+}

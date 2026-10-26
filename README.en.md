@@ -2,7 +2,7 @@
 
 [简体中文 README](README.zh.md)
 
-This project asks whether long-horizon behaviors induced by an external harness or reviewer can be internalized into a student model through trajectory training, and retained after the reviewer is removed at deployment. The project is in the P0/P1 preparation stage. The only executable end-to-end example is a deterministic toy demo; it is not long-horizon benchmark evidence and does not use a real model or training backend.
+This project asks whether long-horizon behaviors induced by an external harness or reviewer can be internalized into a student model through trajectory training, and retained after the reviewer is removed at deployment. The project is in the P0/P1 preparation stage. The end-to-end agent example remains a deterministic toy demo; no real student model or training backend is connected yet. A separate native CPU acceptance has now passed on one official AppWorld training task.
 
 ## Quick start
 
@@ -34,4 +34,6 @@ The scaffold separates student-visible tasks from controller-side task records, 
 
 See [the documentation index](docs/README.md) for the current plan, research question, evaluation protocol, server facts, and engineering notes. The active execution list is [docs/plans/近期实验TODO.md](docs/plans/近期实验TODO.md).
 
-Server preparation now includes offline Git deployment, a content-pinned Harness-Zero reference snapshot, and cached official AppWorld artifacts. AppWorld acceptance is still pending Docker daemon access, Docker Compose, dependency installation, data unpacking, and image validation on the authorized port-22 node. Port 9901 remains out of use. The oracle fixture configuration in `configs/server/appworld_oracle_p0.toml` is an engineering acceptance contract, not a model experiment or an implemented launcher interface.
+On the authorized port-22 node, a separate Python 3.12/AppWorld 0.1.3.post1 environment passed dependency checks for 80 packages. For official train task `07b42fd_1`, the official solution passed all 5 verifier checks; no-op cases before and after reinitialization both failed the task. Initial public profiles matched and source data hashes were unchanged. This used no model calls or GPU. See the [native acceptance record](docs/environment/records/2026-10-26_AppWorld原生验收.md) and [result JSON](docs/environment/server_snapshots/2026-10-26/appworld-native/acceptance.json).
+
+The native scripts execute trusted official code only; they do not verify sandbox isolation or provide a student launcher. Docker daemon access, Compose and the Harbor/container route remain pending. Port 9901 remains out of use. The original PyTorch environment is separate. No official solution source, unpacked database or raw solution-containing interaction log is committed or exported for training.

@@ -1,0 +1,29 @@
+{
+  "schema_version": "appworld-native-launch/v1",
+  "run_id": "native-p0-20261026-120539",
+  "ssh_port": 22,
+  "node": "a100-p22",
+  "project_commit": "f1520da6f93f5552caafa9ec9d16ca0b3e24cb6f",
+  "screen_name": "rsi_native_p0_20261026_120539",
+  "command": [
+    "env",
+    "RSI_STORAGE_ROOT=/nfs-data/sdf/lyf/rsi-long-horizon",
+    "RSI_PROJECT_ROOT=/nfs-data/sdf/lyf/rsi-long-horizon/code/RSI-Towards-LongHorizon",
+    "RSI_NATIVE_STAGE=/nfs-data/sdf/lyf/rsi-long-horizon/incoming/appworld-native-py312-glibc235-20261026",
+    "RSI_NATIVE_RUN_ID=native-p0-20261026-120539",
+    "screen",
+    "-L",
+    "-Logfile",
+    "/nfs-data/sdf/lyf/rsi-long-horizon/logs/native-p0-20261026-120539.log",
+    "-dmS",
+    "rsi_native_p0_20261026_120539",
+    "bash",
+    "/nfs-data/sdf/lyf/rsi-long-horizon/code/RSI-Towards-LongHorizon/scripts/server/bootstrap_appworld_native.sh"
+  ],
+  "log_path": "/nfs-data/sdf/lyf/rsi-long-horizon/logs/native-p0-20261026-120539.log",
+  "report_prefix": "/nfs-data/sdf/lyf/rsi-long-horizon/reports/native-p0-20261026-120539",
+  "launched_at_utc": "2026-10-26T12:05:39.152209+00:00",
+  "gpu_used": false,
+  "model_calls": 0,
+  "project_tests_passed": 22
+}
