@@ -14,7 +14,7 @@ from typing import Any
 
 from .contracts import Action, ArtifactRef, BenchmarkTask, EpisodeResult, ReviewDecision, TrajectoryStep
 from .environment import Environment
-from .policies import StudentPolicy
+from .policies import StudentActionError, StudentPolicy
 from .reviewers import Reviewer
 
 
@@ -102,9 +102,15 @@ def run_episode(
                 )
             )
             observation = outcome.observation
+            public_observer = getattr(student, "observe_accepted", None)
+            if public_observer is not None:
+                public_observer(accepted, observation)
             if outcome.done:
                 break
         verifier = terminal_failure if terminal_failure is not None else environment.verify(task)
+    except StudentActionError as exc:
+        result = EpisodeResult(task.public.task_id, "failure", False, 0.0, len(trajectory), reviewed_steps, replacements, budget_passes, repr(exc))
+        return result, trajectory, audit
     except Exception as exc:  # preserve infrastructure failures as data
         result = EpisodeResult(task.public.task_id, "infra_error", False, 0.0, len(trajectory), reviewed_steps, replacements, budget_passes, repr(exc))
         return result, trajectory, audit

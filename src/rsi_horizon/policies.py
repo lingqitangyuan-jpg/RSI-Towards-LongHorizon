@@ -7,6 +7,10 @@ from typing import Protocol
 from .contracts import Action, Observation, TaskSpec
 
 
+class StudentActionError(ValueError):
+    """Invalid model output or exhausted student context, counted as task failure."""
+
+
 class StudentPolicy(Protocol):
     artifact_id: str
 

@@ -10,7 +10,7 @@ configs/server/*.env
 runs/*
 !runs/README.md
 checkpoints/
-models/
+/models/
 data/raw/
 data/processed/
 data/derived/
