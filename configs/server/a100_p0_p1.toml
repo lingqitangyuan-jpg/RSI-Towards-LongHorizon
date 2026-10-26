@@ -8,17 +8,18 @@ config_version = "0.1"
 seed = 17
 
 [paths]
-project_root = "/srv/$USER/RSI-Towards-LongHorizon"
-harness_zero_root = "/srv/$USER/RSI-Towards-LongHorizon/sources/repo/Harness_zero/harness-zero-main"
-appworld_data_root = "/srv/$USER/datasets/appworld"
-run_root = "/srv/$USER/rsi-runs"
-cache_root = "/srv/$USER/.cache/rsi-long-horizon"
+# Planned code/data paths, not deployed by the basic Python/CUDA smoke setup.
+project_root = "/nfs-data/sdf/lyf/rsi-long-horizon/code/RSI-Towards-LongHorizon"
+harness_zero_root = "/nfs-data/sdf/lyf/rsi-long-horizon/code/RSI-Towards-LongHorizon/sources/repo/Harness_zero/harness-zero-main"
+appworld_data_root = "/nfs-data/sdf/lyf/rsi-long-horizon/datasets/appworld"
+run_root = "/nfs-data/sdf/lyf/rsi-long-horizon/runs"
+cache_root = "/nfs-data/sdf/lyf/rsi-long-horizon/cache"
 
 [scheduler]
-# Fill these after checking the lab scheduler.
-type = "TODO"
-partition = "TODO"
-account = "TODO"
+# Confirmed 2026-10-26: select an available physical GPU per run; accepted setup uses port 22.
+type = "direct"
+partition = ""
+account = ""
 max_wait_hours = 48
 preemptible = true
 max_concurrent_jobs = 1

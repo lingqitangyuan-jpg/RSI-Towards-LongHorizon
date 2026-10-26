@@ -1,0 +1,54 @@
+{
+  "scope": "python_cuda_smoke_only",
+  "status": "PASS",
+  "hostname": "a100-p22",
+  "time_utc": "2026-10-26T09:03:10.397810+00:00",
+  "root": "/nfs-data/sdf/lyf/rsi-long-horizon",
+  "checks": {
+    "private_python": true,
+    "storage_write_read": true,
+    "single_selected_cuda_device": true,
+    "float32_matmul_cpu_gpu_agree": true,
+    "bfloat16_matmul": true,
+    "numpy_interop": true,
+    "cudnn_convolution": true,
+    "finite_backward_gradients": true,
+    "pip_dependencies": true
+  },
+  "python": "3.12.11 | packaged by conda-forge | (main, Jun  4 2025, 14:45:31) [GCC 13.3.0]",
+  "executable": "/nfs-data/sdf/lyf/rsi-long-horizon/envs/rsi-py312/bin/python",
+  "prefix": "/nfs-data/sdf/lyf/rsi-long-horizon/envs/rsi-py312",
+  "cache_paths": {
+    "CONDA_ENVS_PATH": "/nfs-data/sdf/lyf/rsi-long-horizon/envs",
+    "CONDA_PKGS_DIRS": "/nfs-data/sdf/lyf/rsi-long-horizon/cache/conda/pkgs",
+    "PIP_CACHE_DIR": "/nfs-data/sdf/lyf/rsi-long-horizon/cache/pip",
+    "XDG_CACHE_HOME": "/nfs-data/sdf/lyf/rsi-long-horizon/cache/xdg",
+    "HF_HOME": "/nfs-data/sdf/lyf/rsi-long-horizon/cache/huggingface",
+    "UV_CACHE_DIR": "/nfs-data/sdf/lyf/rsi-long-horizon/cache/uv",
+    "TORCH_HOME": "/nfs-data/sdf/lyf/rsi-long-horizon/cache/torch",
+    "TRITON_CACHE_DIR": "/nfs-data/sdf/lyf/rsi-long-horizon/cache/triton",
+    "CUDA_CACHE_PATH": "/nfs-data/sdf/lyf/rsi-long-horizon/cache/cuda",
+    "TMPDIR": "/nfs-data/sdf/lyf/rsi-long-horizon/tmp"
+  },
+  "physical_gpu": {
+    "index": 1,
+    "uuid": "GPU-7151b14c-0e53-9c27-f821-3732aa48c48d",
+    "name": "NVIDIA A100-SXM4-80GB",
+    "memory_mib": 81920,
+    "driver": "570.211.01",
+    "memory_used_before_mib": 0,
+    "utilization_before": 0
+  },
+  "runtime": {
+    "torch": "2.6.0+cu124",
+    "numpy": "2.2.6",
+    "cuda": "12.4",
+    "cudnn": 90100,
+    "logical_device": "cuda:0",
+    "device_name": "NVIDIA A100-SXM4-80GB",
+    "peak_allocated_mib": 8.3125,
+    "fp32_max_abs_error": 1.71661376953125e-05,
+    "bf16_max_abs_error": 0.1749420166015625
+  },
+  "pip_check": "No broken requirements found."
+}
