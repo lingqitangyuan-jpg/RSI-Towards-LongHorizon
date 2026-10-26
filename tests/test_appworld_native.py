@@ -27,3 +27,20 @@ class NativeAcceptanceTests(unittest.TestCase):
         world = SimpleNamespace(evaluate=lambda **kwargs: tracker)
         with self.assertRaisesRegex(RuntimeError, "no tests"):
             native.evaluate_stats(world)
+
+    def test_negative_score_is_retained_without_aborting_acceptance(self):
+        calls = []
+        tracker = SimpleNamespace(
+            to_dict=lambda **kwargs: {"success": False, "num_tests": 2},
+            pass_count=1, fail_count=1)
+
+        def evaluate(**kwargs):
+            calls.append(kwargs)
+            if not kwargs["suppress_errors"]:
+                raise AssertionError("An expected negative requirement failed")
+            return tracker
+
+        stats = native.evaluate_stats(SimpleNamespace(evaluate=evaluate))
+        self.assertEqual(calls, [{"suppress_errors": True}])
+        self.assertFalse(stats["success"])
+        self.assertEqual((stats["pass_count"], stats["fail_count"]), (1, 1))

@@ -93,7 +93,9 @@ def prepare_data(bundle: Path, appworld_root: Path, task_id: str) -> dict:
 
 
 def evaluate_stats(world) -> dict:
-    tracker = world.evaluate(suppress_errors=False)
+    # Official TestTracker records failed requirements instead of raising.
+    # A no-op negative is expected to fail; it must still produce full stats.
+    tracker = world.evaluate(suppress_errors=True)
     stats = tracker.to_dict(stats_only=True)
     stats.update({"pass_count": tracker.pass_count, "fail_count": tracker.fail_count})
     if stats["num_tests"] <= 0:
