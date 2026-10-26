@@ -1,0 +1,330 @@
+{
+  "schema_version": "environment-check/v2",
+  "checked_at_utc": "2026-10-26T11:06:16.599411+00:00",
+  "host": {
+    "hostname": "a100-p22",
+    "platform": "Linux-5.15.0-176-generic-x86_64-with-glibc2.35",
+    "architecture": "x86_64",
+    "user": "lyf"
+  },
+  "paths": {
+    "project_root": "/nfs-data/sdf/lyf/rsi-long-horizon/code/RSI-Towards-LongHorizon",
+    "harness_zero_root": "/nfs-data/sdf/lyf/rsi-long-horizon/code/RSI-Towards-LongHorizon/sources/repo/Harness_zero/harness-zero-main",
+    "appworld_data_root": "/nfs-data/sdf/lyf/rsi-long-horizon/datasets/appworld",
+    "run_root": "/nfs-data/sdf/lyf/rsi-long-horizon/runs"
+  },
+  "checks": [
+    {
+      "name": "python",
+      "status": "ok",
+      "detail": "Python 3.12.11",
+      "value": {
+        "version": "3.12.11",
+        "executable": "/nfs-data/sdf/lyf/rsi-long-horizon/envs/rsi-py312/bin/python"
+      }
+    },
+    {
+      "name": "git",
+      "status": "ok",
+      "detail": "git version 2.34.1",
+      "value": {
+        "executable": "/usr/bin/git",
+        "command": [
+          "git",
+          "--version"
+        ],
+        "returncode": 0
+      }
+    },
+    {
+      "name": "uv",
+      "status": "ok",
+      "detail": "uv 0.13.5 (x86_64-unknown-linux-gnu)",
+      "value": {
+        "executable": "/nfs-data/sdf/lyf/rsi-long-horizon/envs/rsi-py312/bin/uv",
+        "command": [
+          "uv",
+          "--version"
+        ],
+        "returncode": 0
+      }
+    },
+    {
+      "name": "docker",
+      "status": "ok",
+      "detail": "Docker version 29.1.5, build 0e6fee6",
+      "value": {
+        "executable": "/usr/bin/docker",
+        "command": [
+          "docker",
+          "--version"
+        ],
+        "returncode": 0
+      }
+    },
+    {
+      "name": "docker_daemon",
+      "status": "fail",
+      "detail": "permission denied while trying to connect to the docker API at unix:///var/run/docker.sock",
+      "value": {
+        "executable": "/usr/bin/docker",
+        "command": [
+          "docker",
+          "info",
+          "--format",
+          "{{.ServerVersion}}"
+        ],
+        "returncode": 1
+      }
+    },
+    {
+      "name": "docker_compose",
+      "status": "fail",
+      "detail": "docker: unknown command: docker compose\n\nRun 'docker --help' for more information",
+      "value": {
+        "executable": "/usr/bin/docker",
+        "command": [
+          "docker",
+          "compose",
+          "version"
+        ],
+        "returncode": 1
+      }
+    },
+    {
+      "name": "nvidia_smi",
+      "status": "ok",
+      "detail": "8 visible GPU(s)",
+      "value": {
+        "executable": "/usr/bin/nvidia-smi",
+        "gpu_count": 8,
+        "gpus": [
+          {
+            "name": "NVIDIA A100-SXM4-80GB",
+            "memory_mib": "81920",
+            "driver_version": "570.211.01"
+          },
+          {
+            "name": "NVIDIA A100-SXM4-80GB",
+            "memory_mib": "81920",
+            "driver_version": "570.211.01"
+          },
+          {
+            "name": "NVIDIA A100-SXM4-80GB",
+            "memory_mib": "81920",
+            "driver_version": "570.211.01"
+          },
+          {
+            "name": "NVIDIA A100-SXM4-80GB",
+            "memory_mib": "81920",
+            "driver_version": "570.211.01"
+          },
+          {
+            "name": "NVIDIA A100-SXM4-80GB",
+            "memory_mib": "81920",
+            "driver_version": "570.211.01"
+          },
+          {
+            "name": "NVIDIA A100-SXM4-80GB",
+            "memory_mib": "81920",
+            "driver_version": "570.211.01"
+          },
+          {
+            "name": "NVIDIA A100-SXM4-80GB",
+            "memory_mib": "81920",
+            "driver_version": "570.211.01"
+          },
+          {
+            "name": "NVIDIA A100-SXM4-80GB",
+            "memory_mib": "81920",
+            "driver_version": "570.211.01"
+          }
+        ]
+      }
+    },
+    {
+      "name": "project_root",
+      "status": "ok",
+      "detail": "directory exists",
+      "value": {
+        "path": "/nfs-data/sdf/lyf/rsi-long-horizon/code/RSI-Towards-LongHorizon",
+        "exists": true,
+        "kind": "directory"
+      }
+    },
+    {
+      "name": "harness_zero_root",
+      "status": "ok",
+      "detail": "directory exists",
+      "value": {
+        "path": "/nfs-data/sdf/lyf/rsi-long-horizon/code/RSI-Towards-LongHorizon/sources/repo/Harness_zero/harness-zero-main",
+        "exists": true,
+        "kind": "directory"
+      }
+    },
+    {
+      "name": "harness_zero_pyproject",
+      "status": "ok",
+      "detail": "file exists",
+      "value": {
+        "path": "/nfs-data/sdf/lyf/rsi-long-horizon/code/RSI-Towards-LongHorizon/sources/repo/Harness_zero/harness-zero-main/pyproject.toml",
+        "exists": true,
+        "kind": "file"
+      }
+    },
+    {
+      "name": "harness_zero_lock",
+      "status": "ok",
+      "detail": "file exists",
+      "value": {
+        "path": "/nfs-data/sdf/lyf/rsi-long-horizon/code/RSI-Towards-LongHorizon/sources/repo/Harness_zero/harness-zero-main/uv.lock",
+        "exists": true,
+        "kind": "file"
+      }
+    },
+    {
+      "name": "run_root",
+      "status": "warn",
+      "detail": "does not exist",
+      "value": {
+        "path": "/nfs-data/sdf/lyf/rsi-long-horizon/runs",
+        "exists": false,
+        "kind": "directory"
+      }
+    },
+    {
+      "name": "project_disk",
+      "status": "ok",
+      "detail": "1585.37 GiB free of 18333.59 GiB (minimum 20.00 GiB)",
+      "value": {
+        "path": "/nfs-data/sdf/lyf/rsi-long-horizon/code/RSI-Towards-LongHorizon",
+        "free_gib": 1585.374,
+        "total_gib": 18333.594,
+        "minimum_free_gib": 20.0
+      }
+    },
+    {
+      "name": "run_disk",
+      "status": "ok",
+      "detail": "1585.37 GiB free of 18333.59 GiB (minimum 20.00 GiB)",
+      "value": {
+        "path": "/nfs-data/sdf/lyf/rsi-long-horizon",
+        "free_gib": 1585.374,
+        "total_gib": 18333.594,
+        "minimum_free_gib": 20.0
+      }
+    },
+    {
+      "name": "appworld_data_root",
+      "status": "fail",
+      "detail": "does not exist",
+      "value": {
+        "path": "/nfs-data/sdf/lyf/rsi-long-horizon/datasets/appworld",
+        "exists": false,
+        "kind": "directory"
+      }
+    },
+    {
+      "name": "appworld_data_api_docs",
+      "status": "fail",
+      "detail": "does not exist",
+      "value": {
+        "path": "/nfs-data/sdf/lyf/rsi-long-horizon/datasets/appworld/api_docs",
+        "exists": false,
+        "kind": "directory"
+      }
+    },
+    {
+      "name": "appworld_data_base_dbs",
+      "status": "fail",
+      "detail": "does not exist",
+      "value": {
+        "path": "/nfs-data/sdf/lyf/rsi-long-horizon/datasets/appworld/base_dbs",
+        "exists": false,
+        "kind": "directory"
+      }
+    },
+    {
+      "name": "appworld_data_datasets",
+      "status": "fail",
+      "detail": "does not exist",
+      "value": {
+        "path": "/nfs-data/sdf/lyf/rsi-long-horizon/datasets/appworld/datasets",
+        "exists": false,
+        "kind": "directory"
+      }
+    },
+    {
+      "name": "appworld_data_tasks",
+      "status": "fail",
+      "detail": "does not exist",
+      "value": {
+        "path": "/nfs-data/sdf/lyf/rsi-long-horizon/datasets/appworld/tasks",
+        "exists": false,
+        "kind": "directory"
+      }
+    },
+    {
+      "name": "appworld_data_version_txt",
+      "status": "fail",
+      "detail": "does not exist",
+      "value": {
+        "path": "/nfs-data/sdf/lyf/rsi-long-horizon/datasets/appworld/version.txt",
+        "exists": false,
+        "kind": "file"
+      }
+    },
+    {
+      "name": "appworld_split_train",
+      "status": "fail",
+      "detail": "does not exist",
+      "value": {
+        "path": "/nfs-data/sdf/lyf/rsi-long-horizon/datasets/appworld/datasets/train.txt",
+        "exists": false,
+        "kind": "file"
+      }
+    },
+    {
+      "name": "appworld_split_dev",
+      "status": "fail",
+      "detail": "does not exist",
+      "value": {
+        "path": "/nfs-data/sdf/lyf/rsi-long-horizon/datasets/appworld/datasets/dev.txt",
+        "exists": false,
+        "kind": "file"
+      }
+    },
+    {
+      "name": "appworld_split_test_normal",
+      "status": "fail",
+      "detail": "does not exist",
+      "value": {
+        "path": "/nfs-data/sdf/lyf/rsi-long-horizon/datasets/appworld/datasets/test_normal.txt",
+        "exists": false,
+        "kind": "file"
+      }
+    }
+  ],
+  "summary": {
+    "scope": "deployment_preflight_only_not_benchmark_acceptance",
+    "status": "fail",
+    "failure_count": 11,
+    "warning_count": 1,
+    "failures": [
+      "docker_daemon",
+      "docker_compose",
+      "appworld_data_root",
+      "appworld_data_api_docs",
+      "appworld_data_base_dbs",
+      "appworld_data_datasets",
+      "appworld_data_tasks",
+      "appworld_data_version_txt",
+      "appworld_split_train",
+      "appworld_split_dev",
+      "appworld_split_test_normal"
+    ],
+    "warnings": [
+      "run_root"
+    ]
+  }
+}

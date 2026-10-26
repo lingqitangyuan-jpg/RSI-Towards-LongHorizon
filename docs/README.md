@@ -14,6 +14,7 @@
 | 查看计划文件之间的关系 | [规划输出索引](plans/规划输出索引.md) |
 | 条件 B0–B4、数据隔离、指标和公平对照 | [评测与数据协议](experiments/评测与数据协议.md) |
 | 服务器、环境和权限的当前事实 | [资源与环境](environment/资源与环境.md) |
+| 本轮实际推进到哪里、管理员需要协助什么 | [AppWorld 部署预检](environment/records/2026-10-26_AppWorld部署预检.md) |
 | 怎样登录、激活环境和指定 GPU | [服务器使用入门](environment/服务器使用入门.md) |
 | 代码目前实现到哪里 | [项目架构](engineering/项目架构.md) |
 | 论文与参考代码的分析 | [文献库](literature/README.md)、[专题分析](analysis/README.md) |
@@ -39,6 +40,7 @@ docs/
 |---|---|
 | toy runner、公开/私有日志、SFT JSONL 导出器 | 真实 AppWorld 单任务和官方评分结果 |
 | 22 节点独立 Conda 环境，9 项基础 Python/CUDA 检查通过 | Harbor/AppWorld 容器与数据就绪 |
+| 22 节点代码工作树、367 个参考文件校验、19 项项目测试、官方数据包缓存 | Docker 使用权限、Compose、解包后官方数据与真实任务评分 |
 | 固定的接口边界和配置草案 | 真实学生/教师、checkpoint 重载、B0/B1 或 SFT 收益 |
 
 **只使用 22 节点；9901 暂停使用；sdk 不可用。**GPU 空闲状态必须在每次运行前重新查看，验收记录不代表当前可占卡。

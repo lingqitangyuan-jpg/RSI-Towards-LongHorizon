@@ -1,0 +1,96 @@
+{
+  "schema_version": "p0-deployment-record/v1",
+  "recorded_at_utc": "2026-10-26T11:06:16.634186+00:00",
+  "hostname": "a100-p22",
+  "ssh_port": 22,
+  "gpu_used": false,
+  "project_root": "/nfs-data/sdf/lyf/rsi-long-horizon/code/RSI-Towards-LongHorizon",
+  "project_commit": "ffe8d61a130f2703413c2ca13daeef5d55c1fb0d",
+  "uv_version": "uv 0.13.5 (x86_64-unknown-linux-gnu)",
+  "git_status": "",
+  "unit_tests": {
+    "returncode": 0,
+    "passed": 19,
+    "log": "/nfs-data/sdf/lyf/rsi-long-horizon/reports/p0-unit-tests-20261026.txt"
+  },
+  "reference_snapshot": {
+    "schema_version": "reference-snapshot/v1",
+    "name": "harness-zero",
+    "upstream": "https://github.com/metaevo-ai/harness-zero",
+    "revision_type": "local_content_snapshot_not_upstream_commit",
+    "content_sha256": "c47578f41296b6ea57b4ac527c3b65a9a7463e6ee136ca0b5acb03cff503f493",
+    "archive": "harness-zero-c47578f41296b6ea.tar.gz",
+    "archive_sha256": "04d78ded2b08722154675954430c878a21e3758451c3a78b70f3d0f8aa8febfb",
+    "file_count": 19662,
+    "uncompressed_bytes": 58441565,
+    "installation_scope": "appworld_source_and_three_training_fixtures",
+    "complete_reference_checkout": false,
+    "official_appworld_data_installed": false,
+    "selected_file_count": 367,
+    "selected_files_sha256_verified": 367,
+    "training_fixtures": [
+      "07b42fd_1",
+      "287e338_3",
+      "2a163ab_3"
+    ],
+    "destination": "/nfs-data/sdf/lyf/rsi-long-horizon/code/RSI-Towards-LongHorizon/sources/repo/Harness_zero/harness-zero-main"
+  },
+  "official_materials": {
+    "directory": "/nfs-data/sdf/lyf/rsi-long-horizon/incoming",
+    "data": {
+      "artifact": "AppWorld official data bundle",
+      "data_version": "0.1.0",
+      "appworld_package_version": "0.1.3.post1",
+      "source_url": "https://s3.us-west-2.amazonaws.com/appworld.dev/data-0.1.0.bundle",
+      "source_code": "appworld/download.py in the verified official wheel",
+      "sha256": "fd9f9608c2ec71ed0ac25c3633a738b9129a318a129e31230425b9188e508250",
+      "sha256_source": "computed locally; upstream SHA256 not provided by the installer",
+      "bytes": 34280074,
+      "etag": "\"9b077001e5e1feba23cbab10d04de597-2\"",
+      "state": "downloaded_not_unpacked_not_benchmark_accepted"
+    },
+    "package": {
+      "name": "appworld",
+      "version": "0.1.3.post1",
+      "license": "Apache-2.0",
+      "requires_python": "<4.0,>=3.11",
+      "url": "https://files.pythonhosted.org/packages/14/3e/eafcf0e41369c2c9e7409b5f12e02345b21d6d7d579e3e34018d5aa3b3d2/appworld-0.1.3.post1-py3-none-any.whl",
+      "sha256": "db77f8003982502383a50fa2974983894bd1c54f64e2fd3f7e1540d5edd037eb"
+    },
+    "transfer_checksums": "all four SHA256SUMS entries passed before this report"
+  },
+  "preflight": {
+    "exit_code": 1,
+    "path": "/nfs-data/sdf/lyf/rsi-long-horizon/reports/p0-preflight-20261026.json",
+    "summary": {
+      "scope": "deployment_preflight_only_not_benchmark_acceptance",
+      "status": "fail",
+      "failure_count": 11,
+      "warning_count": 1,
+      "failures": [
+        "docker_daemon",
+        "docker_compose",
+        "appworld_data_root",
+        "appworld_data_api_docs",
+        "appworld_data_base_dbs",
+        "appworld_data_datasets",
+        "appworld_data_tasks",
+        "appworld_data_version_txt",
+        "appworld_split_train",
+        "appworld_split_dev",
+        "appworld_split_test_normal"
+      ],
+      "warnings": [
+        "run_root"
+      ]
+    }
+  },
+  "full_extract_attempt": {
+    "status": "interrupted_by_agent_due_to_slow_shared_storage",
+    "only_own_process_stopped": 4095117,
+    "incomplete_files_preserved": "/nfs-data/sdf/lyf/rsi-long-horizon/code/RSI-Towards-LongHorizon/sources/repo/Harness_zero/harness-zero-partial-full-extract-20261026"
+  },
+  "benchmark_episode_started": false,
+  "model_calls": 0,
+  "research_claim": "none"
+}

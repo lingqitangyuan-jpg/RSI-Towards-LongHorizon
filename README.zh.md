@@ -34,4 +34,6 @@ sources/                 参考仓库和论文的本地副本，不进入 Git
 
 完整文档入口见 [docs/README.md](docs/README.md)。当前执行清单见 [近期实验 TODO](docs/plans/近期实验TODO.md)；研究问题见 [研究问题与假设](docs/research/研究问题与假设.md)；评测定义见 [评测与数据协议](docs/experiments/评测与数据协议.md)。服务器已验收事实见 [资源与环境](docs/environment/资源与环境.md)。
 
+服务器准备工作已增加离线 Git 部署、Harness-Zero 内容哈希快照和官方 AppWorld 材料缓存。获准使用的 22 节点仍待 Docker 使用权限、Compose 插件、依赖安装、数据解包和镜像验收；9901 继续停用。configs/server/appworld_oracle_p0.toml 记录模型无关的工程验收约定，尚未作为 launcher 输入接入，也不是模型实验配置。
+
 Git 仓库、分支和提交约定见 [Git 工作流](docs/engineering/Git工作流.md)。
